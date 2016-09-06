@@ -11,12 +11,17 @@ class Executor
     end
   end
 
+  class CreateABitmapFirst < StandardError
+    def initialize
+      super("You don't seem to have created a Bitmap. Try using the command 'I 6 6'")
+    end
+  end
+
   attr_reader :bitmap
 
-  def initialize; end;
+  CREATE_COMMAND = :I
 
   VALID_COMMANDS = {
-    I: "create",
     C: "clear",
     S: "show",
     L: "color_pixel",
