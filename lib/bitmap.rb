@@ -31,7 +31,22 @@ class Bitmap
   def show
     grid.each do |row|
       print "#{row} \n"
+    end;nil
+  end
+
+  def clear
+    grid.map! do |row|
+      row.map! do |pixel|
+        pixel = DEFAULT_FILL
+      end
     end
+  end
+
+  #L X Y C - Colours the pixel (X,Y) with colour C.
+  def color_pixel(x, y, color)
+    # TODO: deal with invalid params passed.
+    # TODO: Need to add +1 to deal with 1 indexing
+    grid[y.to_i][x.to_i] = color
   end
 
   private

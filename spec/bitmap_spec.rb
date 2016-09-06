@@ -46,4 +46,20 @@ RSpec.describe Bitmap do
 
     end
   end
+
+  describe "#clear" do
+    before do
+      subject.color_pixel(0, 0, "A")
+      subject.color_pixel(0, 1, "B")
+    end
+
+    it "resets all the pixels to the default fill `O`" do
+      expect(subject.grid[0][0]).to eq "A"
+      expect(subject.grid[1][0]).to eq "B"
+      subject.clear
+
+      expect(subject.grid[1][1]).to eq "O"
+      expect(subject.grid[3][1]).to eq "O"
+    end
+  end
 end
