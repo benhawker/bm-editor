@@ -36,4 +36,14 @@ RSpec.describe Bitmap do
        expect(subject.grid[rand(1..height-1)]).to contain_exactly("O", "O", "O", "O", "O")
     end
   end
+
+  describe "#show" do
+    it "outputs the grid on a row by row basis in the console" do
+      #TODO - testing STDOUT.
+    end
+
+    it "outputs the grid 250 x 250 size" do
+
+    end
+  end
 end
