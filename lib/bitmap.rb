@@ -61,9 +61,17 @@ class Bitmap
 
   # V X Y1 Y2 C - Draw a vertical segment of colour C in column X between rows Y1 and Y2 (inclusive).
   def vertical_segment(x, y1, y2, color)
+    #TODO - deal with invalid params etc.
     (y1..y2).to_a.each do |i|
       # Once again - 1 to deal with 1 indexing.
       grid[i - 1][x - 1] = color
+    end
+  end
+
+  # H X1 X2 Y C - Draw a horizontal segment of colour C in row Y between columns X1 and X2 (inclusive).
+  def horiztonal_segment(x1, x2, y, color)
+    (x1..x2).to_a.each do |i|
+      grid[y - 1][i - 1] = color
     end
   end
 

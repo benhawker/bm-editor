@@ -101,7 +101,26 @@ RSpec.describe Bitmap do
     end
 
     it "does not color any other pixels" do
+      #TODO
+    end
+  end
 
+  # (x1, x2, y, color)
+  describe "#horiztonal_segment" do
+    before do
+      subject.horiztonal_segment(1, 4, 1, "A")
+    end
+
+    it "colors the expected horiztonal_segment" do
+      print subject.grid
+
+      0.upto(3) do |i|
+        expect(subject.grid[0][i]).to eq "A"
+      end
+    end
+
+    it "does not color any other pixels" do
+      #TODO
     end
   end
 end
