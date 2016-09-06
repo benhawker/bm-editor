@@ -40,9 +40,10 @@ class Executor
     puts args[2]
 
     if VALID_COMMANDS[command]
-      # Do something
-    elsif command == :I
-      bitmap = create_bitmap
+      raise CreateABitmapFirst.new unless bitmap
+      #otherwise still do something to the bitmap instance we are working with.
+    elsif command == CREATE_COMMAND
+      bitmap = args.empty? ? create_bitmap : create_bitmap(args[0].to_i, args[1].to_i)
     else
       raise InvalidCommandCalled.new(command)
     end
@@ -62,7 +63,7 @@ class Executor
   end
 
   def create_bitmap(width=nil, height=nil)
-    @bitmap = Bitmap.new
+    @bitmap = width && height ? Bitmap.new(width: width, height: height) : Bitmap.new
   end
 
 
