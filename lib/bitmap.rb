@@ -19,7 +19,6 @@ class Bitmap
     end
   end
 
-
   DEFAULT_FILL = "O"
   DEFAULT_SIZE = 6
   MIN_SIZE = 1
@@ -70,6 +69,7 @@ class Bitmap
 
   # H X1 X2 Y C - Draw a horizontal segment of colour C in row Y between columns X1 and X2 (inclusive).
   def horiztonal_segment(x1, x2, y, color)
+    #TODO - deal with invalid params etc.
     (x1..x2).to_a.each do |i|
       grid[y - 1][i - 1] = color
     end
