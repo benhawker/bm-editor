@@ -49,8 +49,8 @@ RSpec.describe Bitmap do
 
   describe "#clear" do
     before do
-      subject.color_pixel(0, 0, "A")
-      subject.color_pixel(0, 1, "B")
+      subject.color_pixel(1, 1, "A")
+      subject.color_pixel(1, 2, "B")
     end
 
     it "resets all the pixels to the default fill `O`" do
@@ -60,6 +60,48 @@ RSpec.describe Bitmap do
 
       expect(subject.grid[1][1]).to eq "O"
       expect(subject.grid[3][1]).to eq "O"
+    end
+  end
+
+  describe "#color_pixel" do
+    before do
+      subject.color_pixel(1, 1, "A")
+      subject.color_pixel(3, 1, "B")
+    end
+
+    it "colors the expected pixel" do
+      expect(subject.grid[0][0]).to eq "A"
+      expect(subject.grid[0][2]).to eq "B"
+    end
+
+    it "does not color any other pixels" do
+      expect(subject.grid[0][1]).to eq "O"
+      expect(subject.grid[3][2]).to eq "O"
+    end
+
+    it "raises an error if the specified pixel is out of bounds" do
+      #Specify the error - TODO
+      expect { subject.color_pixel(7, 1, "A") }.to raise_error
+    end
+  end
+
+  # (x, y1, y2, color)
+  describe "#vertical_segment" do
+    before do
+      subject.clear
+      subject.vertical_segment(1, 2, 4, "A")
+    end
+
+    it "colors the expected vertical segement" do
+      print subject.grid
+
+      1.upto(3) do |i|
+        expect(subject.grid[i][0]).to eq "A"
+      end
+    end
+
+    it "does not color any other pixels" do
+
     end
   end
 end
