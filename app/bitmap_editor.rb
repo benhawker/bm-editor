@@ -1,3 +1,5 @@
+require_relative '../lib/bitmap'
+
 class BitmapEditor
 
   def run
