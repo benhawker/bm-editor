@@ -39,11 +39,14 @@ RSpec.describe Bitmap do
 
   describe "#show" do
     it "outputs the grid on a row by row basis in the console" do
-      #TODO - testing STDOUT.
-    end
-
-    it "outputs the grid 250 x 250 size" do
-      #TODO - testing STDOUT.
+      grid = [
+              ["O", "O", "O", "O", "O"],
+              ["O", "O", "O", "O", "O"],
+              ["O", "O", "O", "O", "O"],
+              ["O", "O", "O", "O", "O"],
+              ["O", "O", "O", "O", "O"]
+             ]
+      expect(STDOUT).to receive(:puts).with (grid)
     end
   end
 

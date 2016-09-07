@@ -32,13 +32,6 @@ class Executor
   def execute(input)
     command, args = get_command(input), get_args(input)
 
-    puts command
-    puts args
-
-    puts args[0]
-    puts args[1]
-    puts args[2]
-
     if VALID_COMMANDS[command]
       raise CreateABitmapFirst.new unless bitmap
       bitmap.public_send(VALID_COMMANDS[command], *args)
