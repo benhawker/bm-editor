@@ -33,7 +33,7 @@ RSpec.describe Bitmap do
     end
 
     it "defaults to the colour to the default fill of 0" do
-       expect(subject.grid[rand(1..height-1)]).to contain_exactly("O", "O", "O", "O", "O")
+      expect(subject.grid[rand(1..height-1)]).to contain_exactly("O", "O", "O", "O", "O")
     end
   end
 
@@ -43,7 +43,7 @@ RSpec.describe Bitmap do
     end
 
     it "outputs the grid 250 x 250 size" do
-
+      #TODO - testing STDOUT.
     end
   end
 
@@ -80,8 +80,8 @@ RSpec.describe Bitmap do
     end
 
     it "raises an error if the specified pixel is out of bounds" do
-      #Specify the error - TODO
-      expect { subject.color_pixel(7, 1, "A") }.to raise_error
+      message = "[7, 1] is out of bounds. It must be within width 1 to 5 and height 1 to 5"
+      expect { subject.color_pixel(7, 1, "A") }.to raise_error (message)
     end
   end
 
@@ -93,15 +93,17 @@ RSpec.describe Bitmap do
     end
 
     it "colors the expected vertical segement" do
-      print subject.grid
-
       1.upto(3) do |i|
         expect(subject.grid[i][0]).to eq "A"
       end
     end
 
     it "does not color any other pixels" do
-      #TODO
+      0.upto(4) do |x|
+        1.upto(4) do |y|
+          expect(subject.grid[x][y]).to eq "O"
+        end
+      end
     end
   end
 
@@ -112,15 +114,18 @@ RSpec.describe Bitmap do
     end
 
     it "colors the expected horiztonal_segment" do
-      print subject.grid
-
       0.upto(3) do |i|
         expect(subject.grid[0][i]).to eq "A"
       end
     end
 
     it "does not color any other pixels" do
-      #TODO
+      0.upto(4) do |x|
+        1.upto(4) do |y|
+          expect(subject.grid[y][x]).to eq "O"
+        end
+      end
+      expect(subject.grid[0][4]).to eq "O"
     end
   end
 end
