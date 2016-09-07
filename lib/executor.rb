@@ -41,9 +41,9 @@ class Executor
 
     if VALID_COMMANDS[command]
       raise CreateABitmapFirst.new unless bitmap
-      #otherwise still do something to the bitmap instance we are working with.
+      bitmap.public_send(VALID_COMMANDS[command], *args)
     elsif command == CREATE_COMMAND
-      bitmap = args.empty? ? create_bitmap : create_bitmap(args[0].to_i, args[1].to_i)
+      args.empty? ? create_bitmap : create_bitmap(args[0].to_i, args[1].to_i)
     else
       raise InvalidCommandCalled.new(command)
     end
