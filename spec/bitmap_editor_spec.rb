@@ -1,7 +1,6 @@
 require "spec_helper"
 
-describe BitmapEditor
-
+describe BitmapEditor do
 
 
 end

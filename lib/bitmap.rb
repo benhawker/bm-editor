@@ -20,13 +20,13 @@ class Bitmap
     @height = height
 
     raise InvalidBitmapSize.new unless valid_size?(@width, @height)
-    @grid = Array.new(@height, DEFAULT_FILL) { Array.new(@width, DEFAULT_FILL) }
+    @grid = Array.new(@height) { Array.new(@width) { DEFAULT_FILL } }
   end
 
   def show
     grid.each do |row|
       print "#{row} \n"
-    end;nil
+    end
   end
 
   def clear
