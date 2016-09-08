@@ -5,6 +5,10 @@ class BitmapEditor
   def run
     @running = true
     puts 'Type ? for Help'
+
+    @executor = executor
+    puts @executor
+
     while @running
       print '> '
       input = gets.chomp
@@ -15,7 +19,7 @@ class BitmapEditor
       when 'X'
         exit_console
       else
-        executor.execute(input)
+        @executor.execute(input)
       end
     end
   end
