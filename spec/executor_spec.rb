@@ -104,6 +104,11 @@ RSpec.describe Executor do
         message = "We don't recognise that command - you called P. Try using ? to pull up the Help prompt"
         expect { subject.execute("P") }.to raise_error (message)
       end
+
+      it "raises an error with a suggestion when calling a valid command but with lower case" do
+        message = "The command letter is valid but we only accept capital letters. Call I."
+        expect { subject.execute("i") }.to raise_error (message)
+      end
     end
   end
 

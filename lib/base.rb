@@ -9,6 +9,12 @@ class InvalidCommandCalled < StandardError
   end
 end
 
+class DowncasedCommandCalled < StandardError
+  def initialize(command)
+    super("The command letter is valid but we only accept capital letters. Call #{command.upcase}.")
+  end
+end
+
 class CreateABitmapFirst < StandardError
   def initialize
     super("You don't seem to have created a Bitmap. Create one using I.")
@@ -28,7 +34,7 @@ class OutOfBoundsError < StandardError
   end
 end
 
-#TODO
+#TODO - Further details required here.
 class SegmentOutOfBoundsError < StandardError
   def initialize
     super("Segment out of bounds - to be specified")

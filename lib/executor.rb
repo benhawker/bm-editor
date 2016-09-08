@@ -26,14 +26,16 @@ class Executor
     puts args[0]
     puts args[1]
     puts args[2]
+    puts args[3]
+    ## _____ ##
 
     if VALID_COMMANDS[command]
       raise CreateABitmapFirst.new unless bitmap
-      bitmap.public_send(VALID_COMMANDS[command], *args)
+      self.bitmap.public_send(VALID_COMMANDS[command], *args)
     elsif command == CREATE_COMMAND
       args.empty? ? create_bitmap : create_bitmap(args[0].to_i, args[1].to_i)
     else
-      raise InvalidCommandCalled.new(command)
+      handle_bad_command(command)
     end
   end
 
@@ -48,6 +50,16 @@ class Executor
   # Working on a number of test cases - needs further testing.
   def get_args(input)
     input.strip.gsub(/^[a-zA-Z\s+]/, " ").split(" ")
+  end
+
+  def handle_bad_command(command)
+    all_commands = VALID_COMMANDS.keys << CREATE_COMMAND
+
+    if all_commands.to_s.downcase.include?(command.to_s)
+      raise DowncasedCommandCalled.new(command)
+    else
+      raise InvalidCommandCalled.new(command)
+    end
   end
 
   def create_bitmap(width=nil, height=nil)
