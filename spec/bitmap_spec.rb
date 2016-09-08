@@ -80,6 +80,11 @@ RSpec.describe Bitmap do
       message = "[7, 1] is out of bounds. It must be within width 1 to 5 and height 1 to 5"
       expect { subject.color_pixel(7, 1, "A") }.to raise_error (message)
     end
+
+    it "raises an error if the color is not A-Z" do
+      message = "a is not valid - must be a capital letter A-Z"
+      expect { subject.color_pixel(7, 1, "a") }.to raise_error (message)
+    end
   end
 
   # (x, y1, y2, color)
@@ -104,8 +109,13 @@ RSpec.describe Bitmap do
     end
 
     it "raises an error if any of the specified pixels are out of bounds" do
-      message = "Segment out of bounds - to be specified"
+      message = "One or more of the pixels in this segment are out of bounds"
       expect { subject.vertical_segment(100, 1, 2, "A") }.to raise_error (message)
+    end
+
+    it "raises an error if the color is not A-Z" do
+      message = "x is not valid - must be a capital letter A-Z"
+      expect { subject.vertical_segment(100, 1, 2, "x") }.to raise_error (message)
     end
   end
 
@@ -128,6 +138,11 @@ RSpec.describe Bitmap do
         end
       end
       expect(subject.grid[0][4]).to eq "O"
+    end
+
+    it "raises an error if the color is not A-Z" do
+      message = "1 is not valid - must be a capital letter A-Z"
+      expect { subject.vertical_segment(100, 1, 2, 1) }.to raise_error (message)
     end
   end
 end

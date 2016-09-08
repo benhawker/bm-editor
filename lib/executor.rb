@@ -1,7 +1,9 @@
-# Executor - handles user input.
-#
 # The +Executor+ is responsible for handling user input
-# and before passing calls to the Bitmap class.
+# and passing the user request to +Bitmap+
+#
+# Usage:
+#   executor = Executor.new
+#   executor.execute("I 10 10")
 
 class Executor
   CREATE_COMMAND = :I
@@ -20,20 +22,20 @@ class Executor
     command, args = get_command(input), get_args(input)
 
     ## _____ ##
-    puts "executor obj"
-    puts self
+    # puts "executor obj"
+    # puts self
 
-    puts "bitmap"
-    puts bitmap
+    # puts "bitmap"
+    # puts bitmap
 
-    puts "Command"
-    puts command
+    # puts "Command"
+    # puts command
 
-    puts "Args 1-3"
-    puts args[0]
-    puts args[1]
-    puts args[2]
-    puts args[3]
+    # puts "Args 1-3"
+    # puts args[0]
+    # puts args[1]
+    # puts args[2]
+    # puts args[3]
     ## _____ ##
 
     if VALID_COMMANDS[command]
@@ -48,13 +50,10 @@ class Executor
 
   private
 
-  # Strip to avoid any issues with leading whitespace.
-  # to_sym to match hash keys.
   def get_command(input)
     input.strip[0].to_sym
   end
 
-  # Working on a number of test cases - needs further testing.
   def get_args(input)
     input.strip.gsub(/^[a-zA-Z\s+]/, " ").split(" ")
   end
