@@ -6,13 +6,12 @@
 # The +Bitmap+ is indexed from 1. I. the top left pixel is [1,1]
 
 class Bitmap
+  attr_reader :width, :height, :grid
 
   DEFAULT_FILL = "O"
   DEFAULT_SIZE = 6
   MIN_SIZE = 1
   MAX_SIZE = 250
-
-  attr_reader :width, :height, :grid
 
   def initialize(width: DEFAULT_SIZE, height: DEFAULT_SIZE)
     @width = width

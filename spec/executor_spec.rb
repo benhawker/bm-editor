@@ -6,7 +6,9 @@ RSpec.describe Executor do
   describe "#execute" do
     # Listed in order that the if/elsif executes.
 
-    context "when a valid command is called" do
+    context "valid commands - as per the specification" do
+      let(:bitmap) { double(:bitmap) }
+
       before do
         subject.execute("I")
         subject.execute("L 1 1 A")
@@ -15,8 +17,16 @@ RSpec.describe Executor do
       # Consider what we are testing - oversteps the responsibility of this class?
       # Test that it is sending the correct message to the Bitmap class rather than the below.
       it "paints a pixel successfully" do
-        print subject.bitmap.grid
         expect(subject.bitmap.grid[0][0]).to eq "A"
+      end
+
+      #TODO - refactor all of this.
+      it "paints a pixel - repeated spec" do
+        subject.stub(:bitmap).and_return(bitmap)
+
+        expect(bitmap).to receive(:color_pixel).with("1", "1", "A")
+        subject.execute("L 1 1 A")
+        # Being received zero times.
       end
 
       context "when a bitmap has not been created already" do
@@ -25,6 +35,41 @@ RSpec.describe Executor do
           expect { described_class.new.execute("C") }.to raise_error (message)
         end
       end
+    end
+
+    # Double bitmap and expect it to receive the command specified...
+    # Refactor the above context block to use this format.
+    context "badly formatted commands - that are still valid" do
+
+      let(:bitmap) { double(:bitmap) }
+
+      before do
+        subject.execute("I")
+        subject.stub(:bitmap).and_return(bitmap)
+      end
+
+      it "accepts leading whitespace" do
+        expect(bitmap).to receive(:color_pixel).with("1", "1", "A")
+        # TODO: Failing on this test case. - L being passed as first arg.
+        # L also being passed as command though.
+        subject.execute("   L 1 1 A")
+      end
+
+      it "accepts trailing whitespace" do
+        expect(bitmap).to receive(:color_pixel).with("1", "1", "A")
+        subject.execute("L 1 1 A    ")
+      end
+
+      it "accepts additional whitespace between the command and parameters" do
+        expect(bitmap).to receive(:color_pixel).with("1", "1", "A")
+        subject.execute("L   1 1 A")
+      end
+
+      it "accepts additional whitespace between each parameter" do
+        expect(bitmap).to receive(:color_pixel).with("1", "1", "A")
+        subject.execute("L 1   1       A")
+      end
+
     end
 
     context "when the create action is called" do

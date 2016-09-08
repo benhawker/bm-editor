@@ -2,6 +2,7 @@ require_relative './bitmap'
 require_relative './executor'
 require_relative './help'
 
+# Errors related to Executor class
 class InvalidCommandCalled < StandardError
   def initialize(command)
     super("We don't recognise that command - you called #{command}. Try using ? to pull up the Help prompt")
@@ -14,6 +15,7 @@ class CreateABitmapFirst < StandardError
   end
 end
 
+# Errors related to Bitmap class
 class InvalidBitmapSize < StandardError
   def initialize
     super("The specified size is invalid. X and Y must both fall between #{Bitmap::MIN_SIZE} & #{Bitmap::MAX_SIZE} inclusively.")

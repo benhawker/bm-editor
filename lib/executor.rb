@@ -4,7 +4,6 @@
 # and before passing calls to the Bitmap class.
 
 class Executor
-
   attr_reader :bitmap
 
   CREATE_COMMAND = :I
@@ -19,6 +18,14 @@ class Executor
 
   def execute(input)
     command, args = get_command(input), get_args(input)
+
+    puts "Command"
+    puts command
+
+    puts "Args 1-3"
+    puts args[0]
+    puts args[1]
+    puts args[2]
 
     if VALID_COMMANDS[command]
       raise CreateABitmapFirst.new unless bitmap
@@ -46,6 +53,4 @@ class Executor
   def create_bitmap(width=nil, height=nil)
     @bitmap = width && height ? Bitmap.new(width: width, height: height) : Bitmap.new
   end
-
-
 end
