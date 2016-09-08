@@ -102,6 +102,11 @@ RSpec.describe Bitmap do
         end
       end
     end
+
+    it "raises an error if any of the specified pixels are out of bounds" do
+      message = "Segment out of bounds - to be specified"
+      expect { subject.vertical_segment(100, 1, 2, "A") }.to raise_error (message)
+    end
   end
 
   # (x1, x2, y, color)

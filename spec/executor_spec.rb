@@ -26,7 +26,6 @@ RSpec.describe Executor do
 
         expect(bitmap).to receive(:color_pixel).with("1", "1", "A")
         subject.execute("L 1 1 A")
-        # Being received zero times.
       end
 
       context "when a bitmap has not been created already" do

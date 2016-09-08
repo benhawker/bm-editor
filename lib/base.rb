@@ -27,3 +27,10 @@ class OutOfBoundsError < StandardError
     super("[#{x}, #{y}] is out of bounds. It must be within width 1 to #{width} and height 1 to #{height}")
   end
 end
+
+#TODO
+class SegmentOutOfBoundsError < StandardError
+  def initialize
+    super("Segment out of bounds - to be specified")
+  end
+end

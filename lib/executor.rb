@@ -46,8 +46,8 @@ class Executor
   end
 
   # Working on a number of test cases - needs further testing.
-  def get_args (input)
-    input.gsub(/^[a-zA-Z\s+]/, " ").strip.split(" ")
+  def get_args(input)
+    input.strip.gsub(/^[a-zA-Z\s+]/, " ").split(" ")
   end
 
   def create_bitmap(width=nil, height=nil)

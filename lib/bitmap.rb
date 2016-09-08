@@ -39,7 +39,7 @@ class Bitmap
   def color_pixel(x, y, color)
     # TODO: deal with invalid params passed.
     # TODO: avoid repeated calls .to_i.
-    raise OutOfBoundsError.new(x.to_i, y.to_i, width, height) if out_of_bounds?(x.to_i, y.to_i)
+    raise OutOfBoundsError.new(x.to_i, y.to_i, width, height) unless pixel_valid?(x.to_i, y.to_i)
     # TODO: Need to add -1 to deal with 1 indexing.
     # User passes 1,1. Pixel is represeted by grid[0][0]
     grid[y.to_i - 1][x.to_i - 1] = color
@@ -48,15 +48,19 @@ class Bitmap
   # V X Y1 Y2 C - Draw a vertical segment of colour C in column X between rows Y1 and Y2 (inclusive).
   def vertical_segment(x, y1, y2, color)
     #TODO - deal with invalid params etc.
+    raise SegmentOutOfBoundsError.new unless vertical_segment_valid?(x, y1, y2)
+
     (y1..y2).to_a.each do |i|
       # Once again - 1 to deal with 1 indexing.
-      grid[i - 1][x - 1] = color
+      grid[i.to_i - 1][x.to_i - 1] = color
     end
   end
 
   # H X1 X2 Y C - Draw a horizontal segment of colour C in row Y between columns X1 and X2 (inclusive).
   def horiztonal_segment(x1, x2, y, color)
     #TODO - deal with invalid params etc.
+    raise SegmentOutOfBoundsError.new unless horizontal_segment_valid?(x1, x2, y)
+
     (x1..x2).to_a.each do |i|
       grid[y - 1][i - 1] = color
     end
@@ -68,8 +72,19 @@ class Bitmap
     (MIN_SIZE..MAX_SIZE).include?(width) && (MIN_SIZE..MAX_SIZE).include?(height)
   end
 
-  #TODO: No need for true..
-  def out_of_bounds?(x, y)
-    true unless x.between?(0, width) && y.between?(0, height)
+  def pixel_valid?(x, y)
+    x.between?(0, width) && y.between?(0, height)
+  end
+
+  def vertical_segment_valid?(x, y1, y2)
+    (y1..y2).each do |y|
+      return false unless pixel_valid?(x, y)
+    end
+  end
+
+  def horizontal_segment_valid?(x1, x2, y)
+    (x1..x2).each do |x|
+      return false unless pixel_valid?(x, y)
+    end
   end
 end
