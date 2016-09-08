@@ -1,3 +1,3 @@
-require './lib/bitmap_editor'
+require './lib/interface'
 
-BitmapEditor.new.run
+Interface.new.run

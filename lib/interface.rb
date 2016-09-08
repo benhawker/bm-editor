@@ -1,14 +1,15 @@
+# +Interface+ provides the interface to handle raw user input.
+
 require './lib/base'
 
-class BitmapEditor
+class Interface
 
   def run
     @running = true
-    puts 'Type /?/ or /help/ for Help'
-    puts 'Type /X/, /x/ or /exit/ for Help'
+    puts 'Type ? or help for Help'
+    puts 'Type X, x or exit for Help'
 
     @executor = executor
-    puts @executor
 
     while @running
       print '> '
@@ -20,11 +21,9 @@ class BitmapEditor
       else
         begin
           @executor.execute(input)
-          puts "Command executed successfully."
-          puts " -------- "
+          puts "Command executed successfully. \n-------- "
         rescue StandardError => error
-          puts "Failure."
-          puts " -------- "
+          puts "Failure. \n-------- "
           puts error.message
         end
       end

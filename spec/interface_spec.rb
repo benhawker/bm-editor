@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe BitmapEditor do
+describe Interface do
 
 
 end
