@@ -8,6 +8,8 @@
 class Bitmap
   attr_reader :width, :height, :grid
 
+  #TODO: Validate that color must be a CAPITAL LETTER A-Z
+
   DEFAULT_FILL = "O"
   DEFAULT_SIZE = 6
   MIN_SIZE = 1

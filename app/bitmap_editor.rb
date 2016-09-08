@@ -4,7 +4,8 @@ class BitmapEditor
 
   def run
     @running = true
-    puts 'Type ? for Help'
+    puts 'Type /?/ or /help/ for Help'
+    puts 'Type /X/, /x/ or /exit/ for Help'
 
     @executor = executor
     puts @executor
@@ -14,17 +15,32 @@ class BitmapEditor
       input = gets.chomp
 
       case input
-      when '?'
-        show_help
-      when 'X'
-        exit_console
+      when *help_cmd then show_help
+      when *exit_cmd then exit_console
       else
-        @executor.execute(input)
+        begin
+          @executor.execute(input)
+          puts "Command executed successfully."
+          puts " -------- "
+        rescue StandardError => error
+          puts "Failure."
+          puts " -------- "
+          puts error.message
+        end
       end
+
     end
   end
 
   private
+
+  def exit_cmd
+    ['X', 'x', 'exit']
+  end
+
+  def help_cmd
+    ['?', 'help']
+  end
 
   def executor
     Executor.new
