@@ -44,6 +44,8 @@ xxx
 
 ===================
 
-### Adding a new Partner:
+### Notes:
 
-1) Add the partner_name to `config/partners.yml`
+* abc
+* xyz
+

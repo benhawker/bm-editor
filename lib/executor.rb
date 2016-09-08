@@ -4,8 +4,6 @@
 # and before passing calls to the Bitmap class.
 
 class Executor
-  attr_reader :bitmap
-
   CREATE_COMMAND = :I
 
   VALID_COMMANDS = {
@@ -16,8 +14,17 @@ class Executor
     H: "horizontal_segment"
   }
 
+  attr_reader :bitmap
+
   def execute(input)
     command, args = get_command(input), get_args(input)
+
+    ## _____ ##
+    puts "executor obj"
+    puts self
+
+    puts "bitmap"
+    puts bitmap
 
     puts "Command"
     puts command

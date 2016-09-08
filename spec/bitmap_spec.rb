@@ -110,12 +110,12 @@ RSpec.describe Bitmap do
   end
 
   # (x1, x2, y, color)
-  describe "#horiztonal_segment" do
+  describe "#horizontal_segment" do
     before do
-      subject.horiztonal_segment(1, 4, 1, "A")
+      subject.horizontal_segment(1, 4, 1, "A")
     end
 
-    it "colors the expected horiztonal_segment" do
+    it "colors the expected horizontal_segment" do
       0.upto(3) do |i|
         expect(subject.grid[0][i]).to eq "A"
       end
