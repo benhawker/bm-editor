@@ -5,18 +5,6 @@
 
 class Executor
 
-  class InvalidCommandCalled < StandardError
-    def initialize(command)
-      super("We don't recognise that command - you called #{command}. Try using ? to pull up the Help prompt")
-    end
-  end
-
-  class CreateABitmapFirst < StandardError
-    def initialize
-      super("You don't seem to have created a Bitmap. Try using the command 'I 6 6'")
-    end
-  end
-
   attr_reader :bitmap
 
   CREATE_COMMAND = :I

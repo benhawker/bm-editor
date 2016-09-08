@@ -13,15 +13,15 @@ RSpec.describe Bitmap do
       end
 
       it "raises an error when the width is larger than allowed" do
-        expect { described_class.new(width: 251, height: 1) }.to raise_error("The specified size is invalid. X and Y must both fall between #{Bitmap::MIN_SIZE} & #{Bitmap::MAX_SIZE} inclusively.")
+        expect { described_class.new(width: 251, height: 1) }.to raise_error ("The specified size is invalid. X and Y must both fall between #{Bitmap::MIN_SIZE} & #{Bitmap::MAX_SIZE} inclusively.")
       end
 
       it "raises an error when the height is larger than allowed" do
-        expect { described_class.new(width: 1, height: 251) }.to raise_error("The specified size is invalid. X and Y must both fall between #{Bitmap::MIN_SIZE} & #{Bitmap::MAX_SIZE} inclusively.")
+        expect { described_class.new(width: 1, height: 251) }.to raise_error ("The specified size is invalid. X and Y must both fall between #{Bitmap::MIN_SIZE} & #{Bitmap::MAX_SIZE} inclusively.")
       end
 
       it "raises an error should the user try to specify a zero height or width" do
-        expect { described_class.new(width: 1, height: 0) }.to raise_error("The specified size is invalid. X and Y must both fall between #{Bitmap::MIN_SIZE} & #{Bitmap::MAX_SIZE} inclusively.")
+        expect { described_class.new(width: 1, height: 0) }.to raise_error ("The specified size is invalid. X and Y must both fall between #{Bitmap::MIN_SIZE} & #{Bitmap::MAX_SIZE} inclusively.")
       end
     end
 
@@ -39,14 +39,8 @@ RSpec.describe Bitmap do
 
   describe "#show" do
     it "outputs the grid on a row by row basis in the console" do
-      grid = [
-              ["O", "O", "O", "O", "O"],
-              ["O", "O", "O", "O", "O"],
-              ["O", "O", "O", "O", "O"],
-              ["O", "O", "O", "O", "O"],
-              ["O", "O", "O", "O", "O"]
-             ]
-      expect(STDOUT).to receive(:puts).with (grid)
+      grid_output = "[\"O\", \"O\", \"O\", \"O\", \"O\"] \n[\"O\", \"O\", \"O\", \"O\", \"O\"] \n[\"O\", \"O\", \"O\", \"O\", \"O\"] \n[\"O\", \"O\", \"O\", \"O\", \"O\"] \n[\"O\", \"O\", \"O\", \"O\", \"O\"] \n"
+      expect { subject.show }.to output(grid_output ).to_stdout
     end
   end
 

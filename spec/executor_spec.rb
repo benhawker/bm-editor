@@ -21,7 +21,7 @@ RSpec.describe Executor do
 
       context "when a bitmap has not been created already" do
         it "raises an error asking the user to create a bitmap before proceeding" do
-          message = "You don't seem to have created a Bitmap. Try using the command 'I 6 6'"
+          message = "You don't seem to have created a Bitmap. Create one using I."
           expect { described_class.new.execute("C") }.to raise_error (message)
         end
       end

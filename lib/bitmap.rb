@@ -7,18 +7,6 @@
 
 class Bitmap
 
-  class InvalidBitmapSize < StandardError
-    def initialize
-      super("The specified size is invalid. X and Y must both fall between #{MIN_SIZE} & #{MAX_SIZE} inclusively.")
-    end
-  end
-
-  class OutOfBoundsError < StandardError
-    def initialize(x, y, width, height)
-      super("[#{x}, #{y}] is out of bounds. It must be within width 1 to #{width} and height 1 to #{height}")
-    end
-  end
-
   DEFAULT_FILL = "O"
   DEFAULT_SIZE = 6
   MIN_SIZE = 1
