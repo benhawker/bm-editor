@@ -34,7 +34,7 @@ class Bitmap
 
   # Clears the grid. Returning all pixels to the default fill.
   def clear
-    grid.map! do |row|
+    grid.map do |row|
       row.map! do |pixel|
         pixel = DEFAULT_FILL
       end
