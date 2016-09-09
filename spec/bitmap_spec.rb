@@ -5,23 +5,25 @@ RSpec.describe Bitmap do
   let(:height) { 5 }
   subject { described_class.new(width: width, height: height) }
 
-  describe "#initialize" do
+  describe "constructor" do
     context "when a width and height is passed to initialize" do
       it "creates a bitmap grid of the specified size" do
         expect(subject.grid.size).to eq 5
         expect(subject.grid[0].size).to eq 5
       end
 
+      let(:message) { "The specified size is invalid. X and Y must both fall between #{Bitmap::MIN_SIZE} & #{Bitmap::MAX_SIZE} inclusively." }
+
       it "raises an error when the width is larger than allowed" do
-        expect { described_class.new(width: 251, height: 1) }.to raise_error ("The specified size is invalid. X and Y must both fall between #{Bitmap::MIN_SIZE} & #{Bitmap::MAX_SIZE} inclusively.")
+        expect { described_class.new(width: 251, height: 1) }.to raise_error (message)
       end
 
       it "raises an error when the height is larger than allowed" do
-        expect { described_class.new(width: 1, height: 251) }.to raise_error ("The specified size is invalid. X and Y must both fall between #{Bitmap::MIN_SIZE} & #{Bitmap::MAX_SIZE} inclusively.")
+        expect { described_class.new(width: 1, height: 251) }.to raise_error (message)
       end
 
       it "raises an error should the user try to specify a zero height or width" do
-        expect { described_class.new(width: 1, height: 0) }.to raise_error ("The specified size is invalid. X and Y must both fall between #{Bitmap::MIN_SIZE} & #{Bitmap::MAX_SIZE} inclusively.")
+        expect { described_class.new(width: 1, height: 0) }.to raise_error (message)
       end
     end
 

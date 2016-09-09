@@ -1,4 +1,4 @@
-# +Interface+ provides the interface to handle raw user input.
+# +Interface+ provides the interface to handle user input.
 
 require './lib/base'
 

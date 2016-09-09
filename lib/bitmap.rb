@@ -29,7 +29,7 @@ class Bitmap
     end
   end
 
-  # Clears the grid. Returning all pixels to the default fill. "O"
+  # Clears the grid. Returning all pixels to the default fill.
   def clear
     grid.map! do |row|
       row.map! do |pixel|
@@ -41,7 +41,6 @@ class Bitmap
   # Example: L X Y C
   # Colours the pixel (X,Y) with colour C.
   def color_pixel(x, y, color)
-    # TODO: avoid repeated calls .to_i. Consider passing parameters already in correct type.
     raise InvalidColorError.new(color) unless valid_color?(color)
     raise OutOfBoundsError.new(x.to_i, y.to_i, width, height) unless pixel_valid?(x.to_i, y.to_i)
 
@@ -54,7 +53,7 @@ class Bitmap
     raise InvalidColorError.new(color) unless valid_color?(color)
     raise SegmentOutOfBoundsError.new unless vertical_segment_valid?(x.to_i, y1.to_i, y2.to_i)
 
-    (y1..y2).to_a.each do |i|
+    y1.upto(y2).each do |i|
       grid[i.to_i - 1][x.to_i - 1] = color
     end
   end
@@ -65,7 +64,7 @@ class Bitmap
     raise InvalidColorError.new(color) unless valid_color?(color)
     raise SegmentOutOfBoundsError.new unless horizontal_segment_valid?(x1.to_i, x2.to_i, y.to_i)
 
-    (x1..x2).to_a.each do |i|
+    x1.upto(x2).each do |i|
       grid[y.to_i - 1][i.to_i - 1] = color
     end
   end

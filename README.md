@@ -32,7 +32,7 @@ There are 8 supported commands:
 ### Usage:
 
 ```
-xxx
+ruby runner.rb
 
 ```
 
