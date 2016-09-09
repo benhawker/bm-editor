@@ -41,7 +41,7 @@ RSpec.describe Bitmap do
 
   describe "#show" do
     it "outputs the grid on a row by row basis in the console" do
-      grid_output = "[\"O\", \"O\", \"O\", \"O\", \"O\"] \n[\"O\", \"O\", \"O\", \"O\", \"O\"] \n[\"O\", \"O\", \"O\", \"O\", \"O\"] \n[\"O\", \"O\", \"O\", \"O\", \"O\"] \n[\"O\", \"O\", \"O\", \"O\", \"O\"] \n"
+      grid_output = "    1    2    3    4    5\n1 [\"O\", \"O\", \"O\", \"O\", \"O\"] \n2 [\"O\", \"O\", \"O\", \"O\", \"O\"] \n3 [\"O\", \"O\", \"O\", \"O\", \"O\"] \n4 [\"O\", \"O\", \"O\", \"O\", \"O\"] \n5 [\"O\", \"O\", \"O\", \"O\", \"O\"] \n"
       expect { subject.show }.to output(grid_output ).to_stdout
     end
   end

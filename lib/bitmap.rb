@@ -24,8 +24,11 @@ class Bitmap
 
   # Show the grid in the terminal.
   def show
-    grid.each do |row|
-      print "#{row} \n"
+    1.upto(width).each { |x| print "    " + "#{x}"}
+    print "\n"
+
+    grid.each_with_index do |row, index|
+      print "#{index + 1} #{row} \n"
     end
   end
 
