@@ -38,6 +38,18 @@ end
 
 class InvalidColorError < StandardError
   def initialize(color)
-    super("#{color} is not valid - must be a capital letter A-Z")
+    super("#{color} is not a valid color - must be a capital letter A-Z")
+  end
+end
+
+class ArgumentError < StandardError
+  def initialize
+    super("There seems to be an issue with the arguments you passed to this command. Try using ? to pull up the Help prompt")
+  end
+end
+
+class NoInputGiven < StandardError
+  def initialize
+    super("Please provide some input!")
   end
 end

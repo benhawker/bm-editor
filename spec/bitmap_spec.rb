@@ -82,7 +82,7 @@ RSpec.describe Bitmap do
     end
 
     it "raises an error if the color is not A-Z" do
-      message = "a is not valid - must be a capital letter A-Z"
+      message = "a is not a valid color - must be a capital letter A-Z"
       expect { subject.color_pixel(7, 1, "a") }.to raise_error (message)
     end
   end
@@ -114,7 +114,7 @@ RSpec.describe Bitmap do
     end
 
     it "raises an error if the color is not A-Z" do
-      message = "x is not valid - must be a capital letter A-Z"
+      message = "x is not a valid color - must be a capital letter A-Z"
       expect { subject.vertical_segment(100, 1, 2, "x") }.to raise_error (message)
     end
   end
@@ -141,7 +141,7 @@ RSpec.describe Bitmap do
     end
 
     it "raises an error if the color is not A-Z" do
-      message = "1 is not valid - must be a capital letter A-Z"
+      message = "1 is not a valid color - must be a capital letter A-Z"
       expect { subject.vertical_segment(100, 1, 2, 1) }.to raise_error (message)
     end
   end

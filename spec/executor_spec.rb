@@ -92,11 +92,15 @@ RSpec.describe Executor do
         expect { subject.execute("P") }.to raise_error (message)
       end
 
+      it "raises an error when no input is given" do
+        message = "Please provide some input!"
+        expect { subject.execute("") }.to raise_error (message)
+      end
+
       it "raises an error with a suggestion when calling a valid command but with lower case" do
         message = "The command letter is valid but we only accept capital letters. Call I."
         expect { subject.execute("i") }.to raise_error (message)
       end
     end
   end
-
 end

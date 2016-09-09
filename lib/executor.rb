@@ -3,7 +3,7 @@
 #
 # Usage:
 #   executor = Executor.new
-#   executor.execute("I 10 10")
+#   executor.execute("I 1 1")
 
 class Executor
   CREATE_COMMAND = :I
@@ -21,23 +21,6 @@ class Executor
   def execute(input)
     command, args = get_command(input), get_args(input)
 
-    ## _____ ##
-    # puts "executor obj"
-    # puts self
-
-    # puts "bitmap"
-    # puts bitmap
-
-    # puts "Command"
-    # puts command
-
-    # puts "Args 1-3"
-    # puts args[0]
-    # puts args[1]
-    # puts args[2]
-    # puts args[3]
-    ## _____ ##
-
     if VALID_COMMANDS[command]
       raise CreateABitmapFirst.new unless bitmap
       self.bitmap.public_send(VALID_COMMANDS[command], *args)
@@ -51,7 +34,7 @@ class Executor
   private
 
   def get_command(input)
-    input.strip[0].to_sym
+    input.strip[0].to_sym unless input.empty?
   end
 
   def get_args(input)
@@ -61,7 +44,9 @@ class Executor
   def handle_bad_command(command)
     all_commands = VALID_COMMANDS.keys << CREATE_COMMAND
 
-    if all_commands.to_s.downcase.include?(command.to_s)
+    if command.nil?
+      raise NoInputGiven.new
+    elsif all_commands.to_s.downcase.include?(command.to_s)
       raise DowncasedCommandCalled.new(command)
     else
       raise InvalidCommandCalled.new(command)
