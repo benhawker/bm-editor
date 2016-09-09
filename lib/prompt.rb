@@ -2,7 +2,7 @@
 
 require './lib/base'
 
-class Interface
+class Prompt
 
   def run
     @running = true

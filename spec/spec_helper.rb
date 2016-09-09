@@ -1,4 +1,4 @@
-require './lib/interface'
+require './lib/prompt'
 
 require 'coveralls'
 Coveralls.wear!

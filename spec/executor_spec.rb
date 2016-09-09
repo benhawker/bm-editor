@@ -5,34 +5,47 @@ RSpec.describe Executor do
   let(:bitmap) { double(:bitmap) }
 
   describe "#execute" do
-    context "valid commands - as per the specification" do
-
-      before do
-        subject.execute("I")
-        subject.execute("L 1 1 A")
-      end
-
-      class BitmapDouble
-        def color_pixel(*args); @args = args; end
-        def args; @args; end
-      end
-
-      it "paints a pixel" do
-        bitmap_double = BitmapDouble.new
-        subject.stub(:bitmap).and_return(bitmap_double)
-        subject.execute("L 1 1 A")
-        expect(bitmap_double.args).to eq(["1", "1", "A"])
-      end
-
-      context "when a bitmap has not been created already" do
-        it "raises an error asking the user to create a bitmap before proceeding" do
-          message = "You don't seem to have created a Bitmap. Create one using I."
-          expect { described_class.new.execute("C") }.to raise_error (message)
-        end
+    context "when a bitmap has not been created already" do
+      it "raises an error asking the user to create a bitmap before proceeding" do
+        message = "You don't seem to have created a Bitmap. Create one using I."
+        expect { described_class.new.execute("C") }.to raise_error (message)
       end
     end
 
-    context "badly formatted commands - that are still valid" do
+    context "valid commands - as per the specification" do
+      before do
+        subject.execute("I")
+        subject.execute("L 1 1 A")
+        subject.stub(:bitmap).and_return(bitmap)
+      end
+
+      it "paints a pixel" do
+        expect(bitmap).to receive(:color_pixel).with("1", "1", "A")
+        subject.execute("L 1 1 A")
+      end
+
+      it "paints a horizontal line (x1, x2, y, color)" do
+        expect(bitmap).to receive(:horizontal_segment).with("1", "6", "4", "A")
+        subject.execute("H 1 6 4 A")
+      end
+
+      it "paints a vertical line (x, y1, y2, color)" do
+        expect(bitmap).to receive(:vertical_segment).with("1", "1", "4", "X")
+        subject.execute("V 1 1 4 X")
+      end
+
+      it "clears the bitmap" do
+        expect(bitmap).to receive(:clear)
+        subject.execute("C")
+      end
+
+      it "shows the bitmap" do
+        expect(bitmap).to receive(:show)
+        subject.execute("S")
+      end
+    end
+
+    context "valid command - that are badly formatted" do
       before do
         subject.execute("I")
         subject.stub(:bitmap).and_return(bitmap)
@@ -60,34 +73,20 @@ RSpec.describe Executor do
     end
 
     context "when the create action is called" do
-      let(:subject) { described_class.new }
-      before(:each) { subject.execute("I") }
-
-      it "creates a new bitmap instance of the default size when called with no arguments" do
-        # This should be creating a 6 x 6 grid. Zero indexed this should be 0..5 - needs further work.
-        expect(subject.bitmap.grid.size).to eq 6
-        expect(subject.bitmap.grid[rand(0...6)].size).to eq 6
-      end
-    end
-
-    context "further context block for test separation" do
-      let(:subject) { described_class.new }
-      before { subject.execute("I 80 100") }
-
-      it "creates a new bitmap instance of the specified size" do
-        # TODO: Check indexing
-        expect(subject.bitmap.grid.size).to eq 100
-        expect(subject.bitmap.grid[rand(0...100)].size).to eq 80
+      it "creates a new bitmap instance" do
+        expect(Bitmap).to receive(:new)
+        subject.execute("I 5 5")
       end
 
-      it "creates a new bitmap instance even if we have one already created (essentially overwriting)" do
+      it "creates a new bitmap instance even if one is already created" do
+        original_bitmap_object_id = subject.bitmap.object_id
         subject.execute("I 2 2")
-        expect(subject.bitmap.grid.size).to eq 2
+        expect(subject.bitmap.object_id).not_to eq (original_bitmap_object_id)
       end
     end
 
     context "when a command that is not listed is called" do
-      it "raises an error" do
+      it "raises an error when the command is not recognised" do
         message = "We don't recognise that command - you called P. Try using ? to pull up the Help prompt"
         expect { subject.execute("P") }.to raise_error (message)
       end

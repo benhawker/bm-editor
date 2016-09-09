@@ -1,3 +1,3 @@
-require './lib/interface'
+require './lib/prompt'
 
-Interface.new.run
+Prompt.new.run
