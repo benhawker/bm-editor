@@ -12,10 +12,16 @@ RSpec.describe Executor do
         subject.execute("L 1 1 A")
       end
 
-      it "paints a pixel - repeated spec" do
-        subject.stub(:bitmap).and_return(bitmap)
-        expect(bitmap).to receive(:color_pixel).with("1", "1", "A")
+      class BitmapDouble
+        def color_pixel(*args); @args = args; end
+        def args; @args; end
+      end
+
+      it "paints a pixel" do
+        bitmap_double = BitmapDouble.new
+        subject.stub(:bitmap).and_return(bitmap_double)
         subject.execute("L 1 1 A")
+        expect(bitmap_double.args).to eq(["1", "1", "A"])
       end
 
       context "when a bitmap has not been created already" do
