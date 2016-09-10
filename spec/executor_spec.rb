@@ -74,7 +74,7 @@ RSpec.describe Executor do
 
     context "when the create action is called" do
       it "creates a new bitmap instance" do
-        expect(Bitmap).to receive(:new)
+        expect(Bitmap).to receive(:new).with ({:width=>5, :height=>5})
         subject.execute("I 5 5")
       end
 

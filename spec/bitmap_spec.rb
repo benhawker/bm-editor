@@ -42,7 +42,7 @@ RSpec.describe Bitmap do
   describe "#show" do
     it "outputs the grid on a row by row basis in the console" do
       grid_output = "    1    2    3    4    5\n1 [\"O\", \"O\", \"O\", \"O\", \"O\"] \n2 [\"O\", \"O\", \"O\", \"O\", \"O\"] \n3 [\"O\", \"O\", \"O\", \"O\", \"O\"] \n4 [\"O\", \"O\", \"O\", \"O\", \"O\"] \n5 [\"O\", \"O\", \"O\", \"O\", \"O\"] \n"
-      expect { subject.show }.to output(grid_output ).to_stdout
+      expect { subject.show }.to output(grid_output).to_stdout
     end
   end
 
@@ -55,6 +55,7 @@ RSpec.describe Bitmap do
     it "resets all the pixels to the default fill `O`" do
       expect(subject.grid[0][0]).to eq "A"
       expect(subject.grid[1][0]).to eq "B"
+
       subject.clear
 
       expect(subject.grid[1][1]).to eq "O"

@@ -128,11 +128,4 @@ Command executed successfully.
 --------
 ```
 
-
 ===================
-
-### Notes:
-
-*
-* xyz
-
