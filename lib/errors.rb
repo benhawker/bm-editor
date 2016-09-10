@@ -17,6 +17,8 @@ class CreateABitmapFirst < StandardError
   end
 end
 
+# ************** #
+
 # Errors related to Bitmap class
 class InvalidBitmapSize < StandardError
   def initialize

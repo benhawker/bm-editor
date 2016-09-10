@@ -33,19 +33,106 @@ There are 8 supported commands:
 
 ```
 ruby runner.rb
-
 ```
 
-Dependencies:
+Run the specs:
+```
+rspec
+```
+
+===================
+
+### Example usage:
+
+* S (Show Command)
 
 ```
-xxx
+> S
+    1    2    3    4    5    6
+1 ["O", "O", "O", "O", "O", "O"]
+2 ["O", "O", "O", "O", "O", "O"]
+3 ["O", "O", "O", "O", "O", "O"]
+4 ["O", "O", "O", "O", "O", "O"]
+5 ["O", "O", "O", "O", "O", "O"]
+6 ["O", "O", "O", "O", "O", "O"]
+Command executed successfully.
 ```
+
+* L 1 1 C (Paint a single pixel of color C in pixel 1,1)
+
+```
+> L 1 1 C
+Command executed successfully.
+--------
+> S
+    1    2    3    4    5    6
+1 ["C", "O", "O", "O", "O", "O"]
+2 ["O", "O", "O", "O", "O", "O"]
+3 ["O", "O", "O", "O", "O", "O"]
+4 ["O", "O", "O", "O", "O", "O"]
+5 ["O", "O", "O", "O", "O", "O"]
+6 ["O", "O", "O", "O", "O", "O"]
+Command executed successfully.
+--------
+```
+
+* V 1 1 6 C - Draw a vertical segment of colour C in column 1 between rows 1 and 6
+```
+> V 1 1 6 C
+Command executed successfully.
+--------
+> S
+    1    2    3    4    5    6
+1 ["C", "O", "O", "O", "O", "O"]
+2 ["C", "O", "O", "O", "O", "O"]
+3 ["C", "O", "O", "O", "O", "O"]
+4 ["C", "O", "O", "O", "O", "O"]
+5 ["C", "O", "O", "O", "O", "O"]
+6 ["C", "O", "O", "O", "O", "O"]
+Command executed successfully.
+--------
+```
+
+* C - Clears the bitmap
+```
+> C
+Command executed successfully.
+--------
+> S
+    1    2    3    4    5    6
+1 ["O", "O", "O", "O", "O", "O"]
+2 ["O", "O", "O", "O", "O", "O"]
+3 ["O", "O", "O", "O", "O", "O"]
+4 ["O", "O", "O", "O", "O", "O"]
+5 ["O", "O", "O", "O", "O", "O"]
+6 ["O", "O", "O", "O", "O", "O"]
+Command executed successfully.
+--------
+```
+
+
+* H 1 6 1 C - Draw a horizontal segment of colour C in row 1 between columns 1 and 6
+```
+> H 1 6 1 C
+Command executed successfully.
+--------
+> S
+    1    2    3    4    5    6
+1 ["C", "C", "C", "C", "C", "C"]
+2 ["O", "O", "O", "O", "O", "O"]
+3 ["O", "O", "O", "O", "O", "O"]
+4 ["O", "O", "O", "O", "O", "O"]
+5 ["O", "O", "O", "O", "O", "O"]
+6 ["O", "O", "O", "O", "O", "O"]
+Command executed successfully.
+--------
+```
+
 
 ===================
 
 ### Notes:
 
-* abc
+*
 * xyz
 
