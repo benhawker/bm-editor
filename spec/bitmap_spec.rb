@@ -146,13 +146,36 @@ RSpec.describe Bitmap do
     # (x1, y1, x2, y2, color)
     describe "diagonal_segment" do
       before do
-        subject.horizontal_segment(1, 1,  6, 6, "A")
+        subject.clear
+        subject.diagonal_segment(1, 1,  5, 5, "A")
       end
 
-      it "colors the expected diaglonal segment" do
-        0.upto(5).each do |i|
+      it "colors the expected diagonal segment" do
+        0.upto(4).each do |i|
           expect(subject.grid[i][i]).to eq "A"
         end
+      end
+
+      # build_coords(x1, y1, x2, y2)
+      it "colors the expect diagonal segment (2nd test)" do
+        subject.clear
+        subject.diagonal_segment(2, 1,  5, 4, "A")
+
+        #print subject.grid
+        expect(subject.grid[0][1]).to eq "A"
+        expect(subject.grid[1][2]).to eq "A"
+        expect(subject.grid[2][3]).to eq "A"
+        expect(subject.grid[3][4]).to eq "A"
+      end
+
+      it "accepts negative coords" do
+        subject.clear
+        subject.diagonal_segment(3, 3,  1, 1, "A")
+
+        print subject.grid
+        expect(subject.grid[0][0]).to eq "A"
+        expect(subject.grid[1][1]).to eq "A"
+        expect(subject.grid[2][2]).to eq "A"
       end
     end
 
