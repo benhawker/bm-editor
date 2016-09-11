@@ -143,6 +143,19 @@ RSpec.describe Bitmap do
       expect(subject.grid[0][4]).to eq "O"
     end
 
+    # (x1, y1, x2, y2, color)
+    describe "diagonal_segment" do
+      before do
+        subject.horizontal_segment(1, 1,  6, 6, "A")
+      end
+
+      it "colors the expected diaglonal segment" do
+        0.upto(5).each do |i|
+          expect(subject.grid[i][i]).to eq "A"
+        end
+      end
+    end
+
     it "raises an error if the color is not A-Z" do
       message = "1 is not a valid color - must be a capital letter A-Z"
       expect { subject.vertical_segment(100, 1, 2, 1) }.to raise_error (message)
