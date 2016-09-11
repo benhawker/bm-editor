@@ -74,15 +74,19 @@ class Bitmap
 
   # Example: D 1 1 6 6 C
   # Draw a diagonal segment of colour C from 1,1 to 6,6
+  # Specify X1 as the left most pixel. I.e. X1 must be smaller than X2.
   def diagonal_segment(x1, y1, x2, y2, color)
-    if x2 < x1
-      x1, x2 = x2, x1
-      y1, y2 = y2, y1
+    # raise InvalidColorError.new(color) unless valid_color?(color)
+    # raise InvalidDiagonalError.new unless valid_diagonal?
+    # raise DiagonalOutOfBoundsError.new unless horizontal_segment_valid?(x1.to_i, x2.to_i, y.to_i)
+
+    #TODO: Raise if the coords are not a valid diagonal.
+
+    if backwards_diagonal?(x1, y1, x2, y2) # i.e \
+      coords_to_fill = build_backwards_coords(x1, y1, x2, y2)
+    else # It is a forward facing diagonal /
+      coords_to_fill = build_forwards_coords(x1, y1, x2, y2)
     end
-
-    coords_to_fill = build_coords(x1, y1, x2, y2)
-
-    print coords_to_fill
 
     coords_to_fill.each do |coord|
       color_pixel(coord[0], coord[1], color)
@@ -91,7 +95,27 @@ class Bitmap
 
   private
 
-  def build_coords(x1, y1, x2, y2)
+  # A backwards diagonal \
+  def backwards_diagonal?(x1, y1, x2, y2)
+    x1 < y1 && x2 > y2
+  end
+
+  def build_backwards_coords(x1, y1, x2, y2)
+    coords = []
+
+    (x1..x2).to_a.reverse.each { |x| coords << [x] }
+
+    y1, y2 = y2, y1
+    (y1..y2).to_a.each_with_index do |y, y_index|
+      coords.each_with_index do |el, coords_index|
+        el << y if y_index == coords_index
+      end
+    end
+
+    coords
+  end
+
+  def build_forwards_coords(x1, y1, x2, y2)
     coords = []
 
     x1.upto(x2).each { |x| coords << [x] }

@@ -13,7 +13,8 @@ class Executor
     S: "show",
     L: "color_pixel",
     V: "vertical_segment",
-    H: "horizontal_segment"
+    H: "horizontal_segment",
+    D: "diagonal_segment"
   }
 
   attr_reader :bitmap

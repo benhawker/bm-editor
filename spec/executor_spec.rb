@@ -24,12 +24,12 @@ RSpec.describe Executor do
         subject.execute("L 1 1 A")
       end
 
-      it "paints a horizontal line (x1, x2, y, color)" do
+      it "paints a horizontal segment (x1, x2, y, color)" do
         expect(bitmap).to receive(:horizontal_segment).with("1", "6", "4", "A")
         subject.execute("H 1 6 4 A")
       end
 
-      it "paints a vertical line (x, y1, y2, color)" do
+      it "paints a vertical segment(x, y1, y2, color)" do
         expect(bitmap).to receive(:vertical_segment).with("1", "1", "4", "X")
         subject.execute("V 1 1 4 X")
       end
@@ -42,6 +42,11 @@ RSpec.describe Executor do
       it "shows the bitmap" do
         expect(bitmap).to receive(:show)
         subject.execute("S")
+      end
+
+      it "paint a diagonal segment" do
+        expect(bitmap).to receive(:diagonal_segment).with("1", "5", "5", "1", "X")
+        subject.execute("D 1 5 5 1 X")
       end
     end
 

@@ -142,46 +142,51 @@ RSpec.describe Bitmap do
       end
       expect(subject.grid[0][4]).to eq "O"
     end
+  end
 
-    # (x1, y1, x2, y2, color)
-    describe "diagonal_segment" do
-      before do
-        subject.clear
-        subject.diagonal_segment(1, 1,  5, 5, "A")
-      end
+  # (x1, y1, x2, y2, color)
+  describe "diagonal_segment" do
+    before do
+      subject.clear
+      subject.diagonal_segment(1, 1, 5, 5, "A")
+    end
 
-      it "colors the expected diagonal segment" do
-        0.upto(4).each do |i|
-          expect(subject.grid[i][i]).to eq "A"
-        end
-      end
-
-      # build_coords(x1, y1, x2, y2)
-      it "colors the expect diagonal segment (2nd test)" do
-        subject.clear
-        subject.diagonal_segment(2, 1,  5, 4, "A")
-
-        #print subject.grid
-        expect(subject.grid[0][1]).to eq "A"
-        expect(subject.grid[1][2]).to eq "A"
-        expect(subject.grid[2][3]).to eq "A"
-        expect(subject.grid[3][4]).to eq "A"
-      end
-
-      it "accepts negative coords" do
-        subject.clear
-        subject.diagonal_segment(3, 3,  1, 1, "A")
-
-        print subject.grid
-        expect(subject.grid[0][0]).to eq "A"
-        expect(subject.grid[1][1]).to eq "A"
-        expect(subject.grid[2][2]).to eq "A"
+    it "colors the expected diagonal segment" do
+      0.upto(4).each do |i|
+        expect(subject.grid[i][i]).to eq "A"
       end
     end
 
-    it "raises an error if the color is not A-Z" do
-      message = "1 is not a valid color - must be a capital letter A-Z"
-      expect { subject.vertical_segment(100, 1, 2, 1) }.to raise_error (message)
+    it "colors the expect diagonal segment (2nd test)" do
+      subject.clear
+      subject.diagonal_segment(2, 1, 5, 4, "A")
+
+      expect(subject.grid[0][1]).to eq "A"
+      expect(subject.grid[1][2]).to eq "A"
+      expect(subject.grid[2][3]).to eq "A"
+      expect(subject.grid[3][4]).to eq "A"
     end
+
+    it "draws the line on the backwards diagonal" do
+      subject.clear
+      subject.diagonal_segment(1, 5, 5, 1, "A")
+
+      print "\n"
+      0.upto(subject.grid.size) do |i|
+        print subject.grid[i]
+        print "\n"
+      end
+
+      expect(subject.grid[0][4]).to eq "A"
+      expect(subject.grid[1][3]).to eq "A"
+      expect(subject.grid[2][2]).to eq "A"
+      expect(subject.grid[3][1]).to eq "A"
+      expect(subject.grid[4][0]).to eq "A"
+    end
+  end
+
+  it "raises an error if the color is not A-Z" do
+    message = "1 is not a valid color - must be a capital letter A-Z"
+    expect { subject.vertical_segment(100, 1, 2, 1) }.to raise_error (message)
   end
 end
