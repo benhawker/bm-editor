@@ -171,22 +171,11 @@ RSpec.describe Bitmap do
       subject.clear
       subject.diagonal_segment(1, 5, 5, 1, "A")
 
-      # print "\n"
-      # 0.upto(subject.grid.size) do |i|
-      #   print subject.grid[i]
-      #   print "\n"
-      # end
-
       expect(subject.grid[0][4]).to eq "A"
       expect(subject.grid[1][3]).to eq "A"
       expect(subject.grid[2][2]).to eq "A"
       expect(subject.grid[3][1]).to eq "A"
       expect(subject.grid[4][0]).to eq "A"
-    end
-
-    it "raises" do
-      message = "These coords are not a valid diagonal."
-      expect { subject.diagonal_segment(5, 5, 5, 5, "A") }.to raise_error (message)
     end
 
     it "raises an error if any of the specified pixels are out of bounds" do
