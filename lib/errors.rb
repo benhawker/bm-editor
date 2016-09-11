@@ -44,6 +44,12 @@ class InvalidColorError < StandardError
   end
 end
 
+class DiagonalError < StandardError
+  def initialize
+    super("These coords are not a valid diagonal.")
+  end
+end
+
 class ArgumentError < StandardError
   def initialize
     super("There seems to be an issue with the arguments you passed to this command. Try using ? to pull up the Help prompt")

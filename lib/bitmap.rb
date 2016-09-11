@@ -76,11 +76,8 @@ class Bitmap
   # Draw a diagonal segment of colour C from 1,1 to 6,6
   # Specify X1 as the left most pixel. I.e. X1 must be smaller than X2.
   def diagonal_segment(x1, y1, x2, y2, color)
-    # raise InvalidColorError.new(color) unless valid_color?(color)
-    # raise InvalidDiagonalError.new unless valid_diagonal?
-    # raise DiagonalOutOfBoundsError.new unless horizontal_segment_valid?(x1.to_i, x2.to_i, y.to_i)
-
-    #TODO: Raise if the coords are not a valid diagonal.
+    raise InvalidColorError.new(color) unless valid_color?(color)
+    raise SegmentOutOfBoundsError.new unless diagonal_segment_in_bounds?(x1, y1, x2, y2)
 
     if backwards_diagonal?(x1, y1, x2, y2) # i.e \
       coords_to_fill = build_backwards_coords(x1, y1, x2, y2)
@@ -95,7 +92,40 @@ class Bitmap
 
   private
 
-  # A backwards diagonal \
+  def valid_size?(width, height)
+    (MIN_SIZE..MAX_SIZE).include?(width) && (MIN_SIZE..MAX_SIZE).include?(height)
+  end
+
+  def valid_color?(color)
+    [*('A'..'Z')].include?(color)
+  end
+
+  def pixel_valid?(x, y)
+    x.between?(0, width) && y.between?(0, height)
+  end
+
+  def vertical_segment_valid?(x, y1, y2)
+    (y1..y2).each do |y|
+      return false unless pixel_valid?(x, y)
+    end
+  end
+
+  def horizontal_segment_valid?(x1, x2, y)
+    (x1..x2).each do |x|
+      return false unless pixel_valid?(x, y)
+    end
+  end
+
+  def diagonal_segment_in_bounds?(x1, y1, x2, y2)
+    x1.between?(0, width) && x2.between?(0, width) && y1.between?(0, height) && y2.between?(0, height)
+  end
+
+  def is_a_diagonal?(x1, x2, y1, y2)
+    # TODO: Define what coords constitute a valid diagonal.
+    true
+  end
+
+  # A backwards diagonal is \
   def backwards_diagonal?(x1, y1, x2, y2)
     x1 < y1 && x2 > y2
   end
@@ -126,29 +156,5 @@ class Bitmap
       end
     end
     coords
-  end
-
-  def valid_size?(width, height)
-    (MIN_SIZE..MAX_SIZE).include?(width) && (MIN_SIZE..MAX_SIZE).include?(height)
-  end
-
-  def valid_color?(color)
-    [*('A'..'Z')].include?(color)
-  end
-
-  def pixel_valid?(x, y)
-    x.between?(0, width) && y.between?(0, height)
-  end
-
-  def vertical_segment_valid?(x, y1, y2)
-    (y1..y2).each do |y|
-      return false unless pixel_valid?(x, y)
-    end
-  end
-
-  def horizontal_segment_valid?(x1, x2, y)
-    (x1..x2).each do |x|
-      return false unless pixel_valid?(x, y)
-    end
   end
 end
