@@ -85,13 +85,6 @@ class Bitmap
       coords_to_fill = build_forwards_coords(x1, y1, x2, y2)
     end
 
-    print coords_to_fill
-    puts coords_to_fill.size
-    puts x1
-    puts x2
-    puts y1
-    puts y2
-
     raise DiagonalError.new unless is_a_diagonal?(coords_to_fill, x1, x2)
 
     coords_to_fill.each do |coord|
@@ -102,13 +95,13 @@ class Bitmap
   private
 
   def is_a_diagonal?(coords, x1, x2)
-    # This is far from perfect.
+    # This is far from perfect - will fail on other test cases.
     return false if coords.size == 1
 
     # Return false if x +- 1 && y += 1 - i.e. no adjacency to the next coord.
     coords.each_index do |i|
       break if coords[i+1].nil?
-      puts false if (coords[i+1][0]) != ((coords[i][0] + 1) || (coords[i][0] - 1)) && (coords[i+1][1]) != ((coords[i][1] + 1) || (coords[i][1] - 1))
+      return false if (coords[i+1][0]) != ((coords[i][0] + 1) || (coords[i][0] - 1)) && (coords[i+1][1]) != ((coords[i][1] + 1) || (coords[i][1] - 1))
     end
     true
   end
