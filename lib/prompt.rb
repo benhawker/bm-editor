@@ -1,4 +1,6 @@
-# +Interface+ provides the interface to handle user input.
+# +Prompt+ prompts the user for input and handles
+# basic feedback relating to Help and Exiting.
+# Commands that manipulate a Bitmap are handled by the +Executor+
 
 require './lib/base'
 

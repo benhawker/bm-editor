@@ -85,12 +85,33 @@ class Bitmap
       coords_to_fill = build_forwards_coords(x1, y1, x2, y2)
     end
 
+    print coords_to_fill
+    puts coords_to_fill.size
+    puts x1
+    puts x2
+    puts y1
+    puts y2
+
+    raise DiagonalError.new unless is_a_diagonal?(coords_to_fill, x1, x2)
+
     coords_to_fill.each do |coord|
       color_pixel(coord[0], coord[1], color)
     end
   end
 
   private
+
+  def is_a_diagonal?(coords, x1, x2)
+    # This is far from perfect.
+    return false if coords.size == 1
+
+    # Return false if x +- 1 && y += 1 - i.e. no adjacency to the next coord.
+    coords.each_index do |i|
+      break if coords[i+1].nil?
+      puts false if (coords[i+1][0]) != ((coords[i][0] + 1) || (coords[i][0] - 1)) && (coords[i+1][1]) != ((coords[i][1] + 1) || (coords[i][1] - 1))
+    end
+    true
+  end
 
   def valid_size?(width, height)
     (MIN_SIZE..MAX_SIZE).include?(width) && (MIN_SIZE..MAX_SIZE).include?(height)
@@ -120,16 +141,12 @@ class Bitmap
     x1.between?(0, width) && x2.between?(0, width) && y1.between?(0, height) && y2.between?(0, height)
   end
 
-  def is_a_diagonal?(x1, x2, y1, y2)
-    # TODO: Define what coords constitute a valid diagonal.
-    true
-  end
-
   # A backwards diagonal is \
   def backwards_diagonal?(x1, y1, x2, y2)
     x1 < y1 && x2 > y2
   end
 
+  # Builds a set in coords [[5, 0], [4, 1], etc.] for \
   def build_backwards_coords(x1, y1, x2, y2)
     coords = []
 
@@ -145,6 +162,7 @@ class Bitmap
     coords
   end
 
+  # Builds a set in coords [[0, 0], [1, 1], etc.] for /
   def build_forwards_coords(x1, y1, x2, y2)
     coords = []
 

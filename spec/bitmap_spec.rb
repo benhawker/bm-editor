@@ -189,6 +189,11 @@ RSpec.describe Bitmap do
     end
   end
 
+  it "raises DiagonalError is the coords do not allow a valid diagonal" do
+    message = "These coords are not a valid diagonal."
+    expect { subject.diagonal_segment(5, 5, 5, 5, "A") }.to raise_error (message)
+  end
+
   it "raises an error if the color is not A-Z" do
     message = "1 is not a valid color - must be a capital letter A-Z"
     expect { subject.vertical_segment(100, 1, 2, 1) }.to raise_error (message)
