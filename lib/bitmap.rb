@@ -87,14 +87,10 @@ class Bitmap
   end
 
   def vertical_segment_valid?(x, y1, y2)
-    (y1..y2).each do |y|
-      return false unless pixel_valid?(x, y)
-    end
+    (y1..y2).all? { |y| pixel_valid?(x,y) }
   end
 
   def horizontal_segment_valid?(x1, x2, y)
-    (x1..x2).each do |x|
-      return false unless pixel_valid?(x, y)
-    end
+    (x1..x2).all? { |x| pixel_valid?(x,y) }
   end
 end
