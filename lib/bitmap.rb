@@ -9,7 +9,7 @@
 class Bitmap
   attr_reader :width, :height, :grid
 
-  DEFAULT_FILL = "O"
+  DEFAULT_FILL = "O".freeze
   DEFAULT_SIZE = 6
   MIN_SIZE = 1
   MAX_SIZE = 250
