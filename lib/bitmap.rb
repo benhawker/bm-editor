@@ -81,11 +81,13 @@ class Bitmap
     # tmp var to store the original color of the targeted pixel
     original_color = grid[y - 1][x - 1]
 
+    puts original_color
+
     # Color the original pixel as a starting point
     color_pixel(x, y, color)
 
     # Find all neighbours that match the original color
-    find_neighbours(x - 1, y - 1, original_color)
+    find_neighbours(x.to_i - 1, y.to_i - 1, original_color, color)
 
     # Then Color pixels specified in the neighbours array.
     neighbours.each do |coords|
@@ -93,26 +95,35 @@ class Bitmap
     end
   end
 
-  # Stack level too deep. Run out of time to avoid
-  def find_neighbours(x, y, original_color)
+  def find_neighbours(x, y, original_color, color)
+    return unless valid_coords?(x, y)
+
+    puts ""
+    print grid
+    puts ""
+
     if valid_coords?(x + 1, y) && grid[y][x + 1] == original_color
+      grid[y][x+1] = "-"
       neighbours << [y, x + 1]
-      find_neighbours(x + 1, y, original_color)
+      find_neighbours(x + 1, y, original_color, color)
     end
 
     if valid_coords?(x - 1, y) && grid[y][x - 1] == original_color
+      grid[y][x-1] = "-"
       neighbours << [y, x - 1]
-      #find_neighbours(x - 1, y, original_color)
+      find_neighbours(x - 1, y, original_color, color)
     end
 
-    if valid_coords?(x, y - 1) && grid[y - 1][x] == original_color
+    if valid_coords?(x, y - 1) && grid[y - 1] && grid[y - 1][x] == original_color
+      grid[y-1][x] = "-"
       neighbours << [y - 1, x]
-      find_neighbours(x, y - 1, original_color)
+      find_neighbours(x, y - 1, original_color, color)
     end
 
-    if valid_coords?(x, y + 1) && grid[y + 1][x] == original_color
+    if valid_coords?(x, y + 1) && grid[y + 1] && grid[y + 1][x] == original_color
+      grid[y+1][x] = "-"
       neighbours << [y + 1, x]
-      #find_neighbours(x, y + 1, original_color)
+      find_neighbours(x, y + 1, original_color, color)
     end
   end
 

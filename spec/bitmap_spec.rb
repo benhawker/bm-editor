@@ -226,6 +226,36 @@ RSpec.describe Bitmap do
           expect(subject.grid[1][1]).to eq "A"
         end
       end
+
+
+      context "a further further further spec" do
+        before do
+          subject.clear
+
+          1.upto(5).each do |i|
+            subject.vertical_segment(1, 5, i, "A")
+          end
+
+          subject.color_pixel(5, 5, "B")
+          subject.color_pixel(4, 5, "B")
+          subject.color_pixel(3, 5, "B")
+          subject.color_pixel(2, 5, "B")
+          subject.color_pixel(1, 5, "B")
+        end
+
+        it "fills the neighbouring cells that are of the same original colour (4th spec)" do
+          subject.fill_neighbouring(1, 5, "C")
+          expect(subject.grid[4][0]).to eq "C"
+          expect(subject.grid[4][1]).to eq "C"
+          expect(subject.grid[4][2]).to eq "C"
+          expect(subject.grid[4][3]).to eq "C"
+          expect(subject.grid[4][4]).to eq "C"
+
+          # Expect all others to remain as A - this test should be more rigorous.
+          expect(subject.grid[2][1]).to eq "O"
+          expect(subject.grid[1][1]).to eq "O"
+        end
+      end
     end
 
     it "raises an error if the color is not A-Z" do
