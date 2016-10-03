@@ -7,7 +7,7 @@
 #   bitmap.show
 
 class Bitmap
-  attr_reader :width, :height, :grid
+  attr_reader :width, :height, :grid, :neighbours
 
   DEFAULT_FILL = "O".freeze
   DEFAULT_SIZE = 6
@@ -17,6 +17,8 @@ class Bitmap
   def initialize(width: DEFAULT_SIZE, height: DEFAULT_SIZE)
     @width = width
     @height = height
+
+    @neighbours = []
 
     raise InvalidBitmapSize.new unless valid_size?(@width, @height)
     @grid = Array.new(@height) { Array.new(@width) { DEFAULT_FILL } }
@@ -72,7 +74,64 @@ class Bitmap
     end
   end
 
+  # Example: F X Y C
+  # Colours horizontally or vertically adjacent cells if they are the same colour as the one being targeted.
+  def fill_neighbouring(x, y, color)
+
+    # tmp var to store the original color of the targeted pixel
+    original_color = grid[y - 1][x - 1]
+
+    puts original_color
+
+    # Color the original pixel as a starting point
+    color_pixel(x, y, color)
+
+    # Find all neighbours that match the original color
+    find_neighbours(x.to_i - 1, y.to_i - 1, original_color, color)
+
+    # Then Color pixels specified in the neighbours array.
+    neighbours.each do |coords|
+      color_pixel(coords[1] + 1, coords[0] + 1, color)
+    end
+  end
+
+  def find_neighbours(x, y, original_color, color)
+    return unless valid_coords?(x, y)
+
+    puts ""
+    print grid
+    puts ""
+
+    if valid_coords?(x + 1, y) && grid[y][x + 1] == original_color
+      grid[y][x+1] = "-"
+      neighbours << [y, x + 1]
+      find_neighbours(x + 1, y, original_color, color)
+    end
+
+    if valid_coords?(x - 1, y) && grid[y][x - 1] == original_color
+      grid[y][x-1] = "-"
+      neighbours << [y, x - 1]
+      find_neighbours(x - 1, y, original_color, color)
+    end
+
+    if valid_coords?(x, y - 1) && grid[y - 1] && grid[y - 1][x] == original_color
+      grid[y-1][x] = "-"
+      neighbours << [y - 1, x]
+      find_neighbours(x, y - 1, original_color, color)
+    end
+
+    if valid_coords?(x, y + 1) && grid[y + 1] && grid[y + 1][x] == original_color
+      grid[y+1][x] = "-"
+      neighbours << [y + 1, x]
+      find_neighbours(x, y + 1, original_color, color)
+    end
+  end
+
   private
+
+  def valid_coords?(x, y)
+    x.between?(0, width) && y.between?(0, height)
+  end
 
   def valid_size?(width, height)
     (MIN_SIZE..MAX_SIZE).include?(width) && (MIN_SIZE..MAX_SIZE).include?(height)
