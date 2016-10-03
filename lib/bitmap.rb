@@ -79,73 +79,38 @@ class Bitmap
   def fill_neighbouring(x, y, color)
 
     # tmp var to store the original color of the targeted pixel
-    original_color = grid[y.to_i - 1][x.to_i - 1]
-
-    puts original_color
-    puts original_color.class
+    original_color = grid[y - 1][x - 1]
 
     # Color the original pixel as a starting point
     color_pixel(x, y, color)
 
     # Find all neighbours that match the original color
-    find_neighbours(x.to_i - 1, y.to_i - 1, original_color)
+    find_neighbours(x - 1, y - 1, original_color)
 
-    puts "Pixels to color"
-    print neighbours.uniq
-
-    puts "before"
-    print self.grid
     # Then Color pixels specified in the neighbours array.
     neighbours.each do |coords|
       color_pixel(coords[1] + 1, coords[0] + 1, color)
-      puts "Coloring x: #{coords[0] + 1} && y: #{coords[1] + 1}"
     end
-
-    print self.grid
   end
 
   # Stack level too deep. Run out of time to avoid
   def find_neighbours(x, y, original_color)
-    visited = []
-    visited << [x, y]
-
-    print neighbours.uniq
-
-    if grid[y][x + 1] == original_color && valid_coords?(x + 1, y)
-      puts "found 1"
-      puts x
-      puts y
-      puts x.class
-
+    if valid_coords?(x + 1, y) && grid[y][x + 1] == original_color
       neighbours << [y, x + 1]
       find_neighbours(x + 1, y, original_color)
     end
 
-    if grid[y - 1][x] == original_color && valid_coords?(x, y - 1)
-      puts "found 3"
-
-      neighbours << [y - 1, x]
-      find_neighbours(x, y - 1, original_color)
-    end
-
-    if grid[y][x - 1] == original_color && valid_coords?(x - 1, y)
-      puts "found 2"
-
-      puts x
-      puts y
-      puts x.class
-
+    if valid_coords?(x - 1, y) && grid[y][x - 1] == original_color
       neighbours << [y, x - 1]
       #find_neighbours(x - 1, y, original_color)
     end
 
-    if grid[y + 1][x] == original_color && valid_coords?(x, y + 1)
-      puts "found 4"
+    if valid_coords?(x, y - 1) && grid[y - 1][x] == original_color
+      neighbours << [y - 1, x]
+      find_neighbours(x, y - 1, original_color)
+    end
 
-      puts x
-      puts y
-      puts x.class
-
+    if valid_coords?(x, y + 1) && grid[y + 1][x] == original_color
       neighbours << [y + 1, x]
       #find_neighbours(x, y + 1, original_color)
     end
@@ -154,7 +119,7 @@ class Bitmap
   private
 
   def valid_coords?(x, y)
-     ((MIN_SIZE - 1)..(MAX_SIZE - 1)).include?(x.to_i) && ((MIN_SIZE - 1)..(MAX_SIZE - 1)).include?(y.to_i)
+    x.between?(0, width) && y.between?(0, height)
   end
 
   def valid_size?(width, height)
