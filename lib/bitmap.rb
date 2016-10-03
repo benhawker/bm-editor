@@ -7,7 +7,7 @@
 #   bitmap.show
 
 class Bitmap
-  attr_reader :width, :height, :grid
+  attr_reader :width, :height, :grid, :neighbours
 
   DEFAULT_FILL = "O".freeze
   DEFAULT_SIZE = 6
@@ -17,6 +17,8 @@ class Bitmap
   def initialize(width: DEFAULT_SIZE, height: DEFAULT_SIZE)
     @width = width
     @height = height
+
+    @neighbours = []
 
     raise InvalidBitmapSize.new unless valid_size?(@width, @height)
     @grid = Array.new(@height) { Array.new(@width) { DEFAULT_FILL } }
@@ -71,6 +73,60 @@ class Bitmap
       grid[y.to_i - 1][i.to_i - 1] = color
     end
   end
+
+  # Example: F X Y C
+  # Colours horizontally or vertically adjacent cells if they are the same colour as the one being targeted.
+  def fill_neighbouring(x, y, color)
+
+    # tmp var to store the original color of the targeted pixel
+    original_color = grid[y][x]
+
+    # Color the original pixel as a starting point
+    color_pixel(x, y, color)
+
+    # Find all neighbours that match the original color
+    find_neighbours(x, y, original_color)
+
+    puts "neighbours"
+    print neighbours
+
+    # Then Color pixels specified in the neighbours array.
+    neighbours.uniq.each do |coords|
+      color_pixel(coords[1], coords[0], original_color)
+    end
+  end
+
+  # Stack level too deep. Run out of time to avoid
+  def find_neighbours(x, y, original_color)
+    if grid[y][x + 1] == original_color
+      if valid_size?(x + 1, y)
+        neighbours << [[y][x + 1]]
+        find_neighbours(x + 1, y, original_color)
+      end
+    end
+
+    if grid[y][x - 1] == original_color
+      if valid_size?(x - 1, y)
+        neighbours << [[y][x - 1]]
+        find_neighbours(x - 1, y, original_color)
+      end
+    end
+
+    if grid[y - 1][x] == original_color
+      if valid_size?(x, y - 1)
+        neighbours << [[y - 1][x]]
+        find_neighbours(x, y - 1, original_color)
+      end
+    end
+
+    if grid[y + 1][x] == original_color
+      if valid_size?(x, y + 1)
+        neighbours << [[y + 1][x]]
+        find_neighbours(x, y + 1, original_color)
+      end
+    end
+  end
+
 
   private
 

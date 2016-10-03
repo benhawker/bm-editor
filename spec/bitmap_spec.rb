@@ -151,12 +151,12 @@ RSpec.describe Bitmap do
           subject.horizontal_segment(1, 5, i, "A")
         end
 
-        print subject.grid
+        # print subject.grid
 
         subject.color_pixel(1, 1, "B")
         subject.color_pixel(2, 1, "B")
 
-        print subject.grid
+        # print subject.grid
       end
 
       it "fills the neighbouring cells that are of the same original colour" do
