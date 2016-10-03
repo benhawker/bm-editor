@@ -77,11 +77,8 @@ class Bitmap
   # Example: F X Y C
   # Colours horizontally or vertically adjacent cells if they are the same colour as the one being targeted.
   def fill_neighbouring(x, y, color)
-
     # tmp var to store the original color of the targeted pixel
     original_color = grid[y - 1][x - 1]
-
-    puts original_color
 
     # Color the original pixel as a starting point
     color_pixel(x, y, color)
@@ -89,22 +86,23 @@ class Bitmap
     # Find all neighbours that match the original color
     find_neighbours(x.to_i - 1, y.to_i - 1, original_color, color)
 
-    # Then Color pixels specified in the neighbours array.
+    # Then color the pixels specified in the neighbours array with the new color.
     neighbours.each do |coords|
       color_pixel(coords[1] + 1, coords[0] + 1, color)
     end
   end
 
+  private
+
   def find_neighbours(x, y, original_color, color)
-    return unless valid_coords?(x, y)
-
-    puts ""
-    print grid
-    puts ""
-
     if valid_coords?(x + 1, y) && grid[y][x + 1] == original_color
+      # Set the pixel to something else to avoid infinite recursion back & forth.
       grid[y][x+1] = "-"
+
+      # Shovel the coords into the neighbours array
       neighbours << [y, x + 1]
+
+      # Continue searching for further neighbours
       find_neighbours(x + 1, y, original_color, color)
     end
 
@@ -126,8 +124,6 @@ class Bitmap
       find_neighbours(x, y + 1, original_color, color)
     end
   end
-
-  private
 
   def valid_coords?(x, y)
     x.between?(0, width) && y.between?(0, height)
