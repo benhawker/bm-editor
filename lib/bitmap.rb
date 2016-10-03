@@ -96,7 +96,7 @@ class Bitmap
 
   def find_neighbours(x, y, original_color, color)
     if valid_coords?(x + 1, y) && grid[y][x + 1] == original_color
-      # Set the pixel to something else to avoid infinite recursion back & forth.
+      # Set the pixel to something else to avoid infinite recursion back & forth +1/-1
       grid[y][x+1] = "-"
 
       # Shovel the coords into the neighbours array
@@ -112,13 +112,13 @@ class Bitmap
       find_neighbours(x - 1, y, original_color, color)
     end
 
-    if valid_coords?(x, y - 1) && grid[y - 1] && grid[y - 1][x] == original_color
+    if valid_coords?(x, y - 1) && grid[y - 1][x] == original_color
       grid[y-1][x] = "-"
       neighbours << [y - 1, x]
       find_neighbours(x, y - 1, original_color, color)
     end
 
-    if valid_coords?(x, y + 1) && grid[y + 1] && grid[y + 1][x] == original_color
+    if valid_coords?(x, y + 1) && grid[y + 1][x] == original_color
       grid[y+1][x] = "-"
       neighbours << [y + 1, x]
       find_neighbours(x, y + 1, original_color, color)
@@ -126,7 +126,7 @@ class Bitmap
   end
 
   def valid_coords?(x, y)
-    x.between?(0, width) && y.between?(0, height)
+    x.between?(0, width - 1) && y.between?(0, height - 1)
   end
 
   def valid_size?(width, height)
