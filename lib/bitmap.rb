@@ -88,7 +88,7 @@ class Bitmap
     find_neighbours(x, y, original_color)
 
     puts "neighbours"
-    print neighbours
+    print neighbours.uniq
 
     # Then Color pixels specified in the neighbours array.
     neighbours.uniq.each do |coords|
@@ -98,32 +98,24 @@ class Bitmap
 
   # Stack level too deep. Run out of time to avoid
   def find_neighbours(x, y, original_color)
-    if grid[y][x + 1] == original_color
-      if valid_size?(x + 1, y)
-        neighbours << [[y][x + 1]]
-        find_neighbours(x + 1, y, original_color)
-      end
+    if grid[y][x + 1] == original_color && valid_size?(x + 1, y)
+      neighbours << [[y][x + 1]]
+      find_neighbours(x + 1, y, original_color)
     end
 
-    if grid[y][x - 1] == original_color
-      if valid_size?(x - 1, y)
-        neighbours << [[y][x - 1]]
-        find_neighbours(x - 1, y, original_color)
-      end
+    if grid[y][x - 1] == original_color && valid_size?(x - 1, y)
+      neighbours << [[y][x - 1]]
+      find_neighbours(x - 1, y, original_color)
     end
 
-    if grid[y - 1][x] == original_color
-      if valid_size?(x, y - 1)
-        neighbours << [[y - 1][x]]
-        find_neighbours(x, y - 1, original_color)
-      end
+    if grid[y - 1][x] == original_color && valid_size?(x, y - 1)
+      neighbours << [[y - 1][x]]
+      find_neighbours(x, y - 1, original_color)
     end
 
-    if grid[y + 1][x] == original_color
-      if valid_size?(x, y + 1)
-        neighbours << [[y + 1][x]]
-        find_neighbours(x, y + 1, original_color)
-      end
+    if grid[y + 1][x] == original_color &&valid_size?(x, y - 1)
+      neighbours << [[y + 1][x]]
+      find_neighbours(x, y + 1, original_color)
     end
   end
 
