@@ -95,33 +95,24 @@ class Bitmap
   private
 
   def find_neighbours(x, y, original_color, color)
-    if valid_coords?(x + 1, y) && grid[y][x + 1] == original_color
-      # Set the pixel to something else to avoid infinite recursion back & forth +1/-1
-      grid[y][x+1] = "-"
+    adjacent_coords = [
+                        { x: x + 1, y: y }, { x: x - 1, y: y },
+                        { x: x, y: y + 1 }, { x: x, y: y - 1 }
+                      ]
 
-      # Shovel the coords into the neighbours array
-      neighbours << [y, x + 1]
+    adjacent_coords.each do |coords|
+      if valid_coords?(coords[:x], coords[:y]) && grid[coords[:y]][coords[:x]] == original_color
 
-      # Continue searching for further neighbours
-      find_neighbours(x + 1, y, original_color, color)
-    end
+        # Set the pixel to something else to avoid infinite recursion back & forth +1/-1
+        # This should not be necessary - other ways to solve this issue.
+        grid[coords[:y]][coords[:x]] = "-"
 
-    if valid_coords?(x - 1, y) && grid[y][x - 1] == original_color
-      grid[y][x-1] = "-"
-      neighbours << [y, x - 1]
-      find_neighbours(x - 1, y, original_color, color)
-    end
+        # Shovel the coords into the neighbours array
+        neighbours << [coords[:y], coords[:x]]
 
-    if valid_coords?(x, y - 1) && grid[y - 1][x] == original_color
-      grid[y-1][x] = "-"
-      neighbours << [y - 1, x]
-      find_neighbours(x, y - 1, original_color, color)
-    end
-
-    if valid_coords?(x, y + 1) && grid[y + 1][x] == original_color
-      grid[y+1][x] = "-"
-      neighbours << [y + 1, x]
-      find_neighbours(x, y + 1, original_color, color)
+        # Continue searching for further neighbours
+        find_neighbours(coords[:x], coords[:y], original_color, color)
+      end
     end
   end
 
