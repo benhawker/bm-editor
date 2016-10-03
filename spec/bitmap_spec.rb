@@ -153,9 +153,8 @@ RSpec.describe Bitmap do
 
         subject.color_pixel(1, 1, "B")
         subject.color_pixel(2, 1, "B")
+        subject.color_pixel(3, 1, "B")
         subject.color_pixel(1, 2, "B")
-
-        print subject.grid
       end
 
       it "fills the neighbouring cells that are of the same original colour" do
@@ -163,11 +162,73 @@ RSpec.describe Bitmap do
         expect(subject.grid[0][0]).to eq "C"
         expect(subject.grid[0][1]).to eq "C"
         expect(subject.grid[1][0]).to eq "C"
+        expect(subject.grid[0][2]).to eq "C"
 
         # Expect all others to remain as A
-        expect(subject.grid[0][2]).to eq "A"
         expect(subject.grid[2][1]).to eq "A"
         expect(subject.grid[1][1]).to eq "A"
+      end
+
+      context "a further spec" do
+        before do
+          subject.clear
+
+          1.upto(5).each do |i|
+            subject.horizontal_segment(1, 5, i, "A")
+          end
+
+          subject.color_pixel(5, 5, "B")
+          subject.color_pixel(5, 4, "B")
+          subject.color_pixel(5, 3, "B")
+          subject.color_pixel(5, 2, "B")
+          subject.color_pixel(5, 1, "B")
+
+          print subject.grid
+        end
+
+        it "fills the neighbouring cells that are of the same original colour (2nd spec)" do
+          subject.fill_neighbouring(5, 4, "C")
+          expect(subject.grid[4][4]).to eq "C"
+          expect(subject.grid[3][4]).to eq "C"
+          expect(subject.grid[2][4]).to eq "C"
+          expect(subject.grid[1][4]).to eq "C"
+          expect(subject.grid[0][4]).to eq "C"
+
+          # Expect all others to remain as A - this test could be more rigorous.
+          expect(subject.grid[2][1]).to eq "A"
+          expect(subject.grid[1][1]).to eq "A"
+        end
+      end
+
+      pending "a further spec" do
+        before do
+          subject.clear
+
+          1.upto(5).each do |i|
+            subject.horizontal_segment(1, 5, i, "A")
+          end
+
+          subject.color_pixel(5, 5, "B")
+          subject.color_pixel(5, 4, "B")
+          subject.color_pixel(5, 3, "B")
+          subject.color_pixel(5, 2, "B")
+          subject.color_pixel(5, 1, "B")
+
+          print subject.grid
+        end
+
+        xit "fills the neighbouring cells that are of the same original colour (2nd spec)" do
+          subject.fill_neighbouring(5, 1, "C")
+          expect(subject.grid[0][4]).to eq "C"
+          expect(subject.grid[1][4]).to eq "C"
+          expect(subject.grid[2][4]).to eq "C"
+          expect(subject.grid[3][4]).to eq "C"
+          expect(subject.grid[4][4]).to eq "C"
+
+          # Expect all others to remain as A - this test could be more rigorous.
+          expect(subject.grid[2][1]).to eq "A"
+          expect(subject.grid[1][1]).to eq "A"
+        end
       end
     end
 

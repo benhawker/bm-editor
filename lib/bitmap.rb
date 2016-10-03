@@ -90,14 +90,15 @@ class Bitmap
     # Find all neighbours that match the original color
     find_neighbours(x.to_i - 1, y.to_i - 1, original_color)
 
-    puts "neighbours"
-    print neighbours
+    puts "Pixels to color"
+    print neighbours.uniq
 
+    puts "before"
+    print self.grid
     # Then Color pixels specified in the neighbours array.
     neighbours.each do |coords|
-      puts original_color
-      puts coords
-      color_pixel(coords[0] + 1, coords[1] + 1, color)
+      color_pixel(coords[1] + 1, coords[0] + 1, color)
+      puts "Coloring x: #{coords[0] + 1} && y: #{coords[1] + 1}"
     end
 
     print self.grid
@@ -105,30 +106,40 @@ class Bitmap
 
   # Stack level too deep. Run out of time to avoid
   def find_neighbours(x, y, original_color)
-    if grid[y.to_i][x.to_i + 1] == original_color && valid_coords?(x + 1, y)
-      # puts "found 1"
-      # puts x
-      # puts y
-      # puts x.class
+    visited = []
+    visited << [x, y]
+
+    print neighbours.uniq
+
+    if grid[y][x + 1] == original_color && valid_coords?(x + 1, y)
+      puts "found 1"
+      puts x
+      puts y
+      puts x.class
 
       neighbours << [y, x + 1]
-      # find_neighbours(x + 1, y, original_color)
+      find_neighbours(x + 1, y, original_color)
     end
 
-    if grid[y.to_i][x.to_i - 1] == original_color && valid_coords?(x - 1, y)
-      puts "found 2"
-      neighbours << [y, x - 1]
-      # find_neighbours(x - 1, y, original_color)
-    end
-
-    if grid[y.to_i - 1][x.to_i] == original_color && valid_coords?(x, y - 1)
+    if grid[y - 1][x] == original_color && valid_coords?(x, y - 1)
       puts "found 3"
 
       neighbours << [y - 1, x]
-      # find_neighbours(x, y - 1, original_color)
+      find_neighbours(x, y - 1, original_color)
     end
 
-    if grid[y.to_i + 1][x.to_i] == original_color && valid_coords?(x, y + 1)
+    if grid[y][x - 1] == original_color && valid_coords?(x - 1, y)
+      puts "found 2"
+
+      puts x
+      puts y
+      puts x.class
+
+      neighbours << [y, x - 1]
+      #find_neighbours(x - 1, y, original_color)
+    end
+
+    if grid[y + 1][x] == original_color && valid_coords?(x, y + 1)
       puts "found 4"
 
       puts x
@@ -136,7 +147,7 @@ class Bitmap
       puts x.class
 
       neighbours << [y + 1, x]
-      # find_neighbours(x, y + 1, original_color)
+      #find_neighbours(x, y + 1, original_color)
     end
   end
 
