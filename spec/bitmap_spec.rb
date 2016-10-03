@@ -143,6 +143,32 @@ RSpec.describe Bitmap do
       expect(subject.grid[0][4]).to eq "O"
     end
 
+    describe "#fill_neighbouring" do
+      before do
+        subject.clear
+
+        1.upto(5).each do |i|
+          subject.horizontal_segment(1, 5, i, "A")
+        end
+
+        print subject.grid
+
+        subject.color_pixel(1, 1, "B")
+        subject.color_pixel(2, 1, "B")
+
+        print subject.grid
+      end
+
+      it "fills the neighbouring cells that are of the same original colour" do
+        subject.fill_neighbouring(1, 1, "C")
+        expect(subject.grid[0][0]).to eq "C"
+        expect(subject.grid[0][1]).to eq "C"
+
+        # Expect all others to remain as A
+        expect(subject.grid[1][0]).to eq "A"
+      end
+    end
+
     it "raises an error if the color is not A-Z" do
       message = "1 is not a valid color - must be a capital letter A-Z"
       expect { subject.vertical_segment(100, 1, 2, 1) }.to raise_error (message)
