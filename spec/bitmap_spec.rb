@@ -151,21 +151,23 @@ RSpec.describe Bitmap do
           subject.horizontal_segment(1, 5, i, "A")
         end
 
-        # print subject.grid
-
         subject.color_pixel(1, 1, "B")
         subject.color_pixel(2, 1, "B")
+        subject.color_pixel(1, 2, "B")
 
-        # print subject.grid
+        print subject.grid
       end
 
       it "fills the neighbouring cells that are of the same original colour" do
         subject.fill_neighbouring(1, 1, "C")
         expect(subject.grid[0][0]).to eq "C"
         expect(subject.grid[0][1]).to eq "C"
+        expect(subject.grid[1][0]).to eq "C"
 
         # Expect all others to remain as A
-        expect(subject.grid[1][0]).to eq "A"
+        expect(subject.grid[0][2]).to eq "A"
+        expect(subject.grid[2][1]).to eq "A"
+        expect(subject.grid[1][1]).to eq "A"
       end
     end
 
