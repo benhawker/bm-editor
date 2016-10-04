@@ -7,7 +7,7 @@
 #   bitmap.show
 
 class Bitmap
-  attr_reader :width, :height, :grid, :neighbours
+  attr_reader :width, :height, :grid
 
   DEFAULT_FILL = "O".freeze
   DEFAULT_SIZE = 6
@@ -17,8 +17,6 @@ class Bitmap
   def initialize(width: DEFAULT_SIZE, height: DEFAULT_SIZE)
     @width = width
     @height = height
-
-    @neighbours = []
 
     raise InvalidBitmapSize.new unless valid_size?(@width, @height)
     @grid = Array.new(@height) { Array.new(@width) { DEFAULT_FILL } }
