@@ -85,11 +85,6 @@ class Bitmap
 
     # Find all neighbours that match the original color
     find_neighbours(x.to_i - 1, y.to_i - 1, original_color, color)
-
-    # Then color the pixels specified in the neighbours array with the new color.
-    neighbours.each do |coords|
-      color_pixel(coords[1] + 1, coords[0] + 1, color)
-    end
   end
 
   private
@@ -102,13 +97,8 @@ class Bitmap
 
     adjacent_coords.each do |coords|
       if valid_coords?(coords[:x], coords[:y]) && grid[coords[:y]][coords[:x]] == original_color
-
-        # Set the pixel to something else to avoid infinite recursion back & forth +1/-1
-        # This should not be necessary - other ways to solve this issue.
-        grid[coords[:y]][coords[:x]] = "-"
-
-        # Shovel the coords into the neighbours array
-        neighbours << [coords[:y], coords[:x]]
+        # Color the pixel
+        color_pixel(coords[:x] + 1, coords[:y] + 1, color)
 
         # Continue searching for further neighbours
         find_neighbours(coords[:x], coords[:y], original_color, color)
