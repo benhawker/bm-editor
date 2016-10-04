@@ -76,7 +76,7 @@ class Bitmap
   # Colours horizontally or vertically adjacent cells if they are the same colour as the one being targeted.
   def fill_neighbouring(x, y, color)
     # tmp var to store the original color of the targeted pixel
-    original_color = grid[y - 1][x - 1]
+    original_color = grid[y.to_i - 1][x.to_i - 1]
 
     # Color the original pixel as a starting point
     color_pixel(x, y, color)
