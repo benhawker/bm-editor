@@ -128,4 +128,33 @@ Command executed successfully.
 --------
 ```
 
+
+* F 1 1 C - Colours horizontally or vertically adjacent cells in the specified color if they are the same original color as the one being targeted.
+```
+Given the following grid:
+> S
+    1    2    3    4    5    6
+1 ["A", "A", "O", "O", "O", "O"]
+2 ["O", "A", "O", "O", "O", "O"]
+3 ["O", "A", "A", "A", "O", "O"]
+4 ["O", "O", "O", "A", "O", "O"]
+5 ["O", "O", "O", "O", "O", "O"]
+6 ["O", "O", "O", "O", "O", "O"]
+Command executed successfully.
+--------
+> F 1 1 C
+Command executed successfully.
+--------
+> S
+    1    2    3    4    5    6
+1 ["C", "C", "O", "O", "O", "O"]
+2 ["O", "C", "O", "O", "O", "O"]
+3 ["O", "C", "C", "C", "O", "O"]
+4 ["O", "O", "O", "C", "O", "O"]
+5 ["O", "O", "O", "O", "O", "O"]
+6 ["O", "O", "O", "O", "O", "O"]
+Command executed successfully.
+--------
+```
+
 ===================
